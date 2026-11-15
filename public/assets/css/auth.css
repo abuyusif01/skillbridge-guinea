@@ -1,0 +1,39 @@
+.field-error {
+  display: block;
+  margin-top: 0.1rem;
+  color: var(--red);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
+.auth-alert {
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--red-bg);
+  border-radius: 12px;
+  background: var(--red-bg);
+  color: var(--red);
+  font-size: 0.85rem;
+}
+
+.inline-form {
+  display: flex;
+  margin: 0;
+}
+
+.site-nav .inline-form {
+  flex: none;
+}
+
+.site-nav .inline-form .btn {
+  white-space: nowrap;
+}
+
+@media (max-width: 900px) {
+  .site-nav .inline-form {
+    display: flex;
+  }
+
+  .site-nav .inline-form .btn {
+    width: 100%;
+  }
+}

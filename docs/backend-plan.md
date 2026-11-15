@@ -110,12 +110,15 @@
 
 ## Milestones
 
-1. **Scaffold** — Laravel, Sail, MySQL, Windows guide, CI. *(done in this branch)*
-2. **Auth + roles** — Breeze Blade auth, user role/phone/city fields, policies.
+1. **Scaffold** — Laravel, Sail, MySQL, Windows guide, CI. *(done)*
+2. **Auth + roles** — custom session auth: e-mail/phone login, customer/worker
+   registration, role middleware, auth tests. *(done in `feat/auth-roles`)*
 3. **Schema** — trades, worker profiles, bookings, reviews; factories + seeders
-   with the six trades and demo workers from the design.
+   with the six trades and demo workers from the design. *(done in scaffold)*
 4. **Blade frontend** — layout/header/footer from `design/`, FR/EN translations,
-   theme toggle server-side.
+   theme toggle server-side. Landing page and auth screens are live; search,
+   profile and booking pages remain. Assets currently mirror
+   `design/css|js` under `public/assets`; migrate them to Vite.
 5. **Customer flow** — search, filters, worker profile, booking request.
 6. **Worker dashboard** — pending/accepted/completed, accept/decline/complete.
 7. **Reviews + admin** — review submission, moderation, user management.
