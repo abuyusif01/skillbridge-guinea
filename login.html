@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Connexion | SkillBridge Guinée</title>
+  <meta name="description" content="Connectez-vous à votre compte SkillBridge Guinée.">
+  <meta name="theme-color" content="#1d4ed8">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231d4ed8'/%3E%3Ctext x='50' y='70' font-size='58' text-anchor='middle' fill='white' font-family='Arial' font-weight='bold'%3ES%3C/text%3E%3C/svg%3E">
+  <script src="js/theme.js"></script>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="no-bottom-nav">
+  <a class="skip-link" href="#main">Aller au contenu</a>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html" aria-label="SkillBridge Guinée — Accueil">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-4a9 9 0 0 1 18 0v4"/><path d="M3 18h18"/><path d="M8 18v-2.5M16 18v-2.5M12 18v-2.5"/></svg>
+        </span>
+        <span class="brand-name">SkillBridge <em>Guinée</em></span>
+      </a>
+
+      <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
+        <a href="index.html">Accueil</a>
+        <a href="results.html">Rechercher</a>
+        <a href="dashboard.html">Espace pro</a>
+        <a href="register.html" class="btn btn-primary btn-sm">Créer un compte</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="lang-switch" role="group" aria-label="Language / Langue">
+          <button type="button" data-lang="fr" class="active" aria-pressed="true">FR</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="theme-toggle" type="button" aria-label="Activer le mode sombre" aria-pressed="false" title="Activer le mode sombre">
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        </button>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="Ouvrir le menu">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="main">
+    <div class="auth-layout">
+      <aside class="auth-aside">
+        <a class="brand brand--light" href="index.html" aria-label="SkillBridge Guinée — Accueil">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 18v-4a9 9 0 0 1 18 0v4"/><path d="M3 18h18"/><path d="M8 18v-2.5M16 18v-2.5M12 18v-2.5"/></svg>
+          </span>
+          <span class="brand-name">SkillBridge <em>Guinée</em></span>
+        </a>
+
+        <div>
+          <p class="auth-heading">Bienvenue sur SkillBridge Guinée.</p>
+          <p>Le réseau de confiance pour trouver un artisan qualifié près de chez vous, ou pour développer votre activité.</p>
+          <ul class="auth-points">
+            <li><span class="tick" aria-hidden="true">✓</span>Profils vérifiés par notre équipe</li>
+            <li><span class="tick" aria-hidden="true">✓</span>Réservation gratuite, sans paiement en ligne</li>
+            <li><span class="tick" aria-hidden="true">✓</span>Avis authentiques de clients locaux</li>
+          </ul>
+        </div>
+
+        <p class="auth-quote">« J'ai trouvé un électricien fiable en cinq minutes, directement dans mon quartier. » — Aïssatou, Conakry</p>
+      </aside>
+
+      <div class="auth-panel">
+        <div class="auth-card">
+          <h1>Bon retour</h1>
+          <p class="sub">Connectez-vous pour gérer vos réservations et vos avis.</p>
+
+          <form class="form-grid" data-demo-submit="dashboard.html">
+            <div class="field">
+              <label for="login-id">Téléphone ou e-mail</label>
+              <input class="input" id="login-id" name="login-id" type="text" placeholder="+224 6XX XXX XXX" autocomplete="username" required>
+            </div>
+
+            <div class="field">
+              <label for="login-password">Mot de passe</label>
+              <input class="input" id="login-password" name="login-password" type="password" placeholder="Votre mot de passe" autocomplete="current-password" required>
+            </div>
+
+            <div class="auth-meta">
+              <label class="check"><input type="checkbox"> Se souvenir de moi</label>
+              <a href="#" data-demo="Lien de réinitialisation envoyé (démonstration)">Mot de passe oublié ?</a>
+            </div>
+
+            <button class="btn btn-primary btn-lg btn-block" type="submit">Se connecter</button>
+
+            <div class="auth-divider">ou</div>
+
+            <a class="btn btn-outline btn-block" href="register.html">Créer un compte gratuit</a>
+          </form>
+
+          <p class="auth-footer">Vous êtes un professionnel ? <a href="register.html">Créez votre profil</a></p>
+
+          <div class="note" style="margin-top:1.2rem">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v4h1"/></svg>
+            <span>Prototype : cliquez sur « Se connecter » pour ouvrir le tableau de bord de démonstration.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-legal">
+      <span>© 2026 SkillBridge Guinée</span>
+      <span>Prototype de démonstration · Données fictives</span>
+    </div>
+  </footer>
+
+  <script src="js/i18n-data.js"></script>
+  <script src="js/i18n.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
