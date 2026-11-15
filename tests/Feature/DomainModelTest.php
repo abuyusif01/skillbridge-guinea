@@ -55,6 +55,8 @@ class DomainModelTest extends TestCase
         $this->assertSame(ReviewStatus::Published, $review->status);
         $this->assertSame(5, $review->rating);
         $this->assertTrue($review->booking->isCompleted());
+        $this->assertSame($review->booking->customer_id, $review->customer_id);
+        $this->assertSame($review->booking->worker_id, $review->worker_id);
     }
 
     public function test_user_roles_are_cast_to_enum(): void

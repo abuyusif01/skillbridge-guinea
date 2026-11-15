@@ -114,19 +114,24 @@ class DemoDataSeeder extends Seeder
 
     private function user(string $name, string $email, string $phone, UserRole $role, string $city): User
     {
-        return User::updateOrCreate(
+        $user = User::updateOrCreate(
             ['email' => $email],
             [
                 'name' => $name,
                 'phone' => $phone,
                 'password' => 'password',
-                'role' => $role,
                 'city' => $city,
                 'locale' => 'fr',
-                'is_active' => true,
-                'email_verified_at' => now(),
             ]
         );
+
+        $user->forceFill([
+            'role' => $role,
+            'is_active' => true,
+            'email_verified_at' => $user->email_verified_at ?? now(),
+        ])->save();
+
+        return $user;
     }
 
     private function profile(

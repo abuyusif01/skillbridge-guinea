@@ -53,6 +53,10 @@ composer install
 
 Open <http://localhost:8000>.
 
+> Rootless Docker on Linux: if storage or npm writes fail, run
+> `chmod -R a+rwX storage bootstrap/cache`, then use
+> `./vendor/bin/sail exec laravel.test npm install` once.
+
 `migrate --seed` imports six trades and demo accounts. All demo passwords are
 `password`:
 

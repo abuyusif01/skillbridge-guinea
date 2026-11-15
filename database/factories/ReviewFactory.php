@@ -25,6 +25,22 @@ class ReviewFactory extends Factory
         ];
     }
 
+    public function configure(): static
+    {
+        return $this->afterCreating(function (Review $review) {
+            $booking = $review->booking;
+
+            if (! $booking) {
+                return;
+            }
+
+            $review->forceFill([
+                'customer_id' => $booking->customer_id,
+                'worker_id' => $booking->worker_id,
+            ])->save();
+        });
+    }
+
     public function reported(): static
     {
         return $this->state(fn (array $attributes) => [

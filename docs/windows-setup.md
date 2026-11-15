@@ -113,7 +113,7 @@ cd ~/projects/skillbridge-guinea
 Use this if you do not want Docker. Herd includes PHP and Composer.
 
 1. Install [Laravel Herd for Windows](https://herd.laravel.com/).
-2. Install Node.js 20+.
+2. Install Node.js 22+.
 3. Clone the repo to a normal local folder (avoid OneDrive-synced folders):
 
    ```powershell
