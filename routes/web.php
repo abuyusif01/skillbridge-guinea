@@ -1,12 +1,22 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
+use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
+use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\WorkerBookingController;
+use App\Http\Controllers\WorkerProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
+Route::get('/search', SearchController::class)->name('search');
+Route::get('/workers/{worker}', WorkerProfileController::class)->name('workers.show');
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
@@ -21,5 +31,26 @@ Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->name('logout');
 
 Route::get('/dashboard', DashboardController::class)
-    ->middleware('auth')
+    ->middleware(['auth', 'active'])
     ->name('dashboard');
+
+Route::middleware(['auth', 'active', 'role:customer'])->group(function () {
+    Route::get('/workers/{worker}/book', [BookingController::class, 'create'])->name('bookings.create');
+    Route::post('/workers/{worker}/bookings', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/bookings/{booking}/sent', [BookingController::class, 'success'])->name('bookings.success');
+
+    Route::get('/bookings/{booking}/review', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/bookings/{booking}/review', [ReviewController::class, 'store'])->name('reviews.store');
+});
+
+Route::middleware(['auth', 'active', 'role:worker'])->prefix('worker')->name('worker.')->group(function () {
+    Route::patch('/bookings/{booking}/accept', [WorkerBookingController::class, 'accept'])->name('bookings.accept');
+    Route::patch('/bookings/{booking}/decline', [WorkerBookingController::class, 'decline'])->name('bookings.decline');
+    Route::patch('/bookings/{booking}/complete', [WorkerBookingController::class, 'complete'])->name('bookings.complete');
+});
+
+Route::middleware(['auth', 'active', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', AdminDashboardController::class)->name('dashboard');
+    Route::patch('/users/{user}/status', [AdminUserController::class, 'update'])->name('users.status');
+    Route::delete('/reviews/{review}', [AdminReviewController::class, 'destroy'])->name('reviews.destroy');
+});

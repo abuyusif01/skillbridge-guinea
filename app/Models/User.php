@@ -97,6 +97,15 @@ class User extends Authenticatable
         return $this->role === UserRole::Admin;
     }
 
+    public function initials(): string
+    {
+        $parts = preg_split('/\s+/', trim($this->name)) ?: [];
+        $first = mb_substr($parts[0] ?? '', 0, 1);
+        $last = count($parts) > 1 ? mb_substr($parts[count($parts) - 1], 0, 1) : '';
+
+        return strtoupper($first.$last);
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('is_active', true);

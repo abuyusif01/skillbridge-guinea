@@ -50,7 +50,7 @@
                 <span><span>{{ $featured->workerProfile->trade->localizedName() }}</span> · {{ $featured->city }}</span>
                 <span class="rating-line">
                   @if ($featuredReviewsCount > 0)
-                    <span class="stars" aria-hidden="true">★★★★★</span>
+                    <x-star-rating :rating="(int) round((float) $featuredRating)" />
                     @if ($featuredRating !== null)
                       <strong>{{ $featuredRating }}</strong>
                     @endif
@@ -65,6 +65,8 @@
               <span class="badge badge-green">Disponible</span>
               <span class="badge">{{ $featured->workerProfile->experience_years }} <span>ans d'exp.</span></span>
             </div>
+            <hr class="divider">
+            <a class="btn btn-outline btn-block" href="{{ route('workers.show', $featured) }}">Voir son profil</a>
           </div>
           <span class="floating-tag floating-tag--one">✓ Avis vérifiés</span>
         </aside>
@@ -114,7 +116,7 @@
 
         <div class="trade-grid">
           @foreach ($trades as $trade)
-            <div class="trade-card">
+            <a class="trade-card" href="{{ route('search', ['trade' => $trade->slug]) }}">
               <span class="trade-icon" aria-hidden="true">
                 <strong style="font-size: 1.05rem">{{ mb_substr($trade->localizedName(), 0, 1) }}</strong>
               </span>
@@ -122,7 +124,7 @@
                 <strong>{{ $trade->localizedName() }}</strong>
                 <span>{{ $trade->worker_profiles_count }} professionnels</span>
               </span>
-            </div>
+            </a>
           @endforeach
         </div>
       </div>

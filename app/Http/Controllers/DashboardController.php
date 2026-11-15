@@ -3,54 +3,66 @@
 namespace App\Http\Controllers;
 
 use App\Enums\BookingStatus;
-use App\Enums\ReviewStatus;
-use App\Enums\UserRole;
 use App\Models\Booking;
 use App\Models\Review;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
-    public function __invoke(Request $request): View
+    public function __invoke(Request $request): View|RedirectResponse
     {
         $user = $request->user();
+
+        if ($user->isAdmin()) {
+            return redirect()->route('admin.dashboard');
+        }
 
         if ($user->isWorker()) {
             $user->loadMissing('workerProfile.trade');
 
-            $stats = [
-                ['label' => 'Demandes en attente', 'value' => Booking::forWorker($user)->pending()->count()],
-                ['label' => 'Terminées', 'value' => Booking::forWorker($user)->where('status', BookingStatus::Completed)->count()],
-                ['label' => 'Avis reçus', 'value' => Review::where('worker_id', $user->id)->published()->count()],
-                ['label' => 'Note moyenne', 'value' => $this->averageRating($user)],
-            ];
-        } elseif ($user->isAdmin()) {
-            $stats = [
-                ['label' => 'Utilisateurs', 'value' => User::count()],
-                ['label' => 'Professionnels', 'value' => User::where('role', UserRole::Worker)->count()],
-                ['label' => 'Réservations', 'value' => Booking::count()],
-                ['label' => 'Avis signalés', 'value' => Review::where('status', ReviewStatus::Reported)->count()],
-            ];
-        } else {
-            $stats = [
-                ['label' => 'Réservations', 'value' => $user->bookingsAsCustomer()->count()],
-                ['label' => 'En attente', 'value' => $user->bookingsAsCustomer()->where('status', BookingStatus::Pending)->count()],
-                ['label' => 'Terminées', 'value' => $user->bookingsAsCustomer()->where('status', BookingStatus::Completed)->count()],
-                ['label' => 'Avis donnés', 'value' => $user->reviewsAsCustomer()->count()],
-            ];
+            $bookings = Booking::forWorker($user)
+                ->with(['customer', 'trade', 'review'])
+                ->latest()
+                ->get();
+
+            return view('dashboards.worker', [
+                'user' => $user,
+                'pending' => $bookings->filter(fn ($booking) => $booking->status === BookingStatus::Pending)->values(),
+                'accepted' => $bookings->filter(fn ($booking) => $booking->status === BookingStatus::Accepted)->values(),
+                'completed' => $bookings->filter(fn ($booking) => $booking->status === BookingStatus::Completed)->values(),
+                'stats' => [
+                    ['label' => 'Demandes en attente', 'value' => $bookings->where('status', BookingStatus::Pending)->count()],
+                    ['label' => 'Acceptées', 'value' => $bookings->where('status', BookingStatus::Accepted)->count()],
+                    ['label' => 'Terminées', 'value' => $bookings->where('status', BookingStatus::Completed)->count()],
+                    ['label' => 'Note moyenne', 'value' => $this->averageRating($user)],
+                ],
+            ]);
         }
 
-        return view('dashboard', [
+        $bookings = $user->bookingsAsCustomer()
+            ->with(['worker', 'trade', 'review'])
+            ->latest()
+            ->get();
+
+        return view('dashboards.customer', [
             'user' => $user,
-            'stats' => $stats,
+            'bookings' => $bookings,
+            'stats' => [
+                ['label' => 'Réservations', 'value' => $bookings->count()],
+                ['label' => 'En attente', 'value' => $bookings->where('status', BookingStatus::Pending)->count()],
+                ['label' => 'Terminées', 'value' => $bookings->where('status', BookingStatus::Completed)->count()],
+                ['label' => 'Avis donnés', 'value' => $user->reviewsAsCustomer()->count()],
+            ],
         ]);
     }
 
     private function averageRating(User $user): string
     {
-        $average = Review::where('worker_id', $user->id)
+        $average = Review::query()
+            ->where('worker_id', $user->id)
             ->published()
             ->avg('rating');
 
