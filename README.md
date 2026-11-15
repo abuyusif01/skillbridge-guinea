@@ -71,13 +71,17 @@ Demo users are skipped when `APP_ENV=production`.
 ## What works now
 
 - Public landing page with DB-backed trades, stats and a featured professional
-- Registration for customers and professionals (worker profile created instantly)
-- Login by e-mail or phone, logout, suspended-account check and login throttling
-- Role middleware (`role:admin`) ready for admin routes
-- Authenticated dashboard with role-specific counters
+- Search by trade, city and minimum rating; public worker profiles with reviews
+- Customer booking form, confirmation and dashboard
+- Worker dashboard: accept, decline and complete requests
+- Customer review form, one review per completed booking
+- Admin dashboard: suspend/reactivate users, delete reviews, inspect bookings
+- Registration for customers and professionals; login by e-mail or phone
+- Suspended accounts blocked at login and on active sessions
+- Role middleware (`role:admin`) and policies for booking/review actions
 - FR/EN and light/dark controls on every Blade page
 
-Search, worker profiles, booking, reviews and admin screens are next.
+Notifications, password reset and production deployment are next.
 
 Run tests inside Sail:
 

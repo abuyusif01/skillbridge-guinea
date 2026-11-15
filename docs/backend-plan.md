@@ -119,11 +119,11 @@
    theme toggle server-side. Landing page and auth screens are live; search,
    profile and booking pages remain. Assets currently mirror
    `design/css|js` under `public/assets`; migrate them to Vite.
-5. **Customer flow** — search, filters, worker profile, booking request.
-6. **Worker dashboard** — pending/accepted/completed, accept/decline/complete.
-7. **Reviews + admin** — review submission, moderation, user management.
-8. **Tests + deploy** — feature tests, CI green, Linux deploy, R2 for media if
-   needed.
+5. **Customer flow** — search, filters, worker profile, booking request. *(done)*
+6. **Worker dashboard** — pending/accepted/completed, accept/decline/complete. *(done)*
+7. **Reviews + admin** — review submission, moderation, user management. *(done)*
+8. **Tests + deploy** — 60 feature tests and CI green; production deploy, password
+   reset, notifications and R2 media remain.
 
 ## Open decisions
 

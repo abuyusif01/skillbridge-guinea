@@ -62,9 +62,19 @@ class Booking extends Model
         return $this->status === BookingStatus::Pending;
     }
 
+    public function isAccepted(): bool
+    {
+        return $this->status === BookingStatus::Accepted;
+    }
+
     public function isCompleted(): bool
     {
         return $this->status === BookingStatus::Completed;
+    }
+
+    public function canBeReviewed(): bool
+    {
+        return $this->isCompleted() && ! $this->review()->exists();
     }
 
     public function scopePending(Builder $query): Builder

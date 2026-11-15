@@ -101,6 +101,15 @@ class AuthenticationTest extends TestCase
         $response->assertSessionHasErrors('login');
     }
 
+    public function test_suspended_users_are_logged_out_of_active_sessions(): void
+    {
+        $user = User::factory()->inactive()->create();
+
+        $this->actingAs($user)->get('/dashboard')->assertRedirect(route('login'));
+
+        $this->assertGuest();
+    }
+
     public function test_users_can_logout(): void
     {
         $user = User::factory()->create();
@@ -124,12 +133,13 @@ class AuthenticationTest extends TestCase
 
     public function test_dashboard_renders_for_every_role(): void
     {
-        foreach ([
-            User::factory()->create(),
-            User::factory()->worker()->create(),
-            User::factory()->admin()->create(),
-        ] as $user) {
-            $this->actingAs($user)->get('/dashboard')->assertOk();
-        }
+        $customer = User::factory()->create();
+        $worker = User::factory()->worker()->create();
+        $admin = User::factory()->admin()->create();
+
+        $this->actingAs($customer)->get('/dashboard')->assertOk();
+        $this->actingAs($worker)->get('/dashboard')->assertOk();
+        $this->actingAs($admin)->get('/dashboard')->assertRedirect(route('admin.dashboard'));
+        $this->actingAs($admin)->get(route('admin.dashboard'))->assertOk();
     }
 }
