@@ -41,6 +41,22 @@ class AuthenticationTest extends TestCase
         $response->assertRedirect(route('dashboard'));
     }
 
+    public function test_users_can_login_with_an_uppercase_email(): void
+    {
+        $user = User::factory()->create([
+            'email' => 'case@example.test',
+            'password' => 'password123',
+        ]);
+
+        $response = $this->post('/login', [
+            'login' => 'CASE@example.test',
+            'password' => 'password123',
+        ]);
+
+        $this->assertAuthenticatedAs($user);
+        $response->assertRedirect(route('dashboard'));
+    }
+
     public function test_users_can_login_with_a_formatted_phone(): void
     {
         $user = User::factory()->create([

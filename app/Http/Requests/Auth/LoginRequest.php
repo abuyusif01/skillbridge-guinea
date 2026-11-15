@@ -31,12 +31,8 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        $login = trim((string) $this->input('login'));
+        $login = $this->normalizeLogin((string) $this->input('login'));
         $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'phone';
-
-        if ($field === 'phone') {
-            $login = preg_replace('/[\s\-().]/', '', $login) ?? $login;
-        }
 
         if (! Auth::attempt(
             [$field => $login, 'password' => (string) $this->input('password')],
@@ -79,10 +75,21 @@ class LoginRequest extends FormRequest
         ]);
     }
 
+    private function normalizeLogin(string $login): string
+    {
+        $login = trim($login);
+
+        if (filter_var($login, FILTER_VALIDATE_EMAIL)) {
+            return Str::lower($login);
+        }
+
+        return preg_replace('/[\s\-().]/', '', $login) ?? $login;
+    }
+
     private function throttleKey(): string
     {
         return Str::transliterate(
-            Str::lower((string) $this->input('login')).'|'.$this->ip()
+            Str::lower($this->normalizeLogin((string) $this->input('login'))).'|'.$this->ip()
         );
     }
 
