@@ -68,6 +68,17 @@ Open <http://localhost:8000>.
 
 Demo users are skipped when `APP_ENV=production`.
 
+## What works now
+
+- Public landing page with DB-backed trades, stats and a featured professional
+- Registration for customers and professionals (worker profile created instantly)
+- Login by e-mail or phone, logout, suspended-account check and login throttling
+- Role middleware (`role:admin`) ready for admin routes
+- Authenticated dashboard with role-specific counters
+- FR/EN and light/dark controls on every Blade page
+
+Search, worker profiles, booking, reviews and admin screens are next.
+
 Run tests inside Sail:
 
 ```bash
