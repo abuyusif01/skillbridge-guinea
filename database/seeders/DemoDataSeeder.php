@@ -27,11 +27,10 @@ class DemoDataSeeder extends Seeder
 
         $electrician = Trade::where('slug', 'electrician')->firstOrFail();
         $plumber = Trade::where('slug', 'plumber')->firstOrFail();
-        $mason = Trade::where('slug', 'mason')->firstOrFail();
 
         $this->profile($mamadou, $electrician, 'Électricien basé à Kaloum avec plus de 8 ans d’expérience dans les installations résidentielles et les petits commerces.', 8, 'Kaloum, Matoto, Matam', 150000);
         $this->profile($ibrahima, $electrician, 'Électricien à Ratoma, installations et dépannages rapides.', 5, 'Ratoma, Conakry', 120000);
-        $this->profile($sekou, $mason, 'Maçon à Matoto, petits travaux et rénovations.', 6, 'Matoto, Conakry', 100000);
+        $this->profile($sekou, $electrician, 'Électricien à Matoto, installations et dépannages rapides.', 6, 'Matoto, Conakry', 100000);
         $this->profile($kadiatou, $plumber, 'Plombière à Kaloum, réparations et installations sanitaires.', 4, 'Kaloum, Conakry', 130000);
 
         Booking::firstOrCreate([
@@ -89,7 +88,7 @@ class DemoDataSeeder extends Seeder
                 'description' => 'Réparation de deux prises et remplacement d’un interrupteur.',
             ],
             [
-                'trade_id' => $mason->id,
+                'trade_id' => $electrician->id,
                 'preferred_date' => now()->subDays(4)->toDateString(),
                 'time_slot' => 'afternoon',
                 'address' => 'Matoto, quartier Dabompa',

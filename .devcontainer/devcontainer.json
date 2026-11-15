@@ -17,9 +17,8 @@
 		}
 	},
 	"remoteUser": "sail",
-	"forwardPorts": [8000, 5173],
+	"forwardPorts": [80, 5173],
 	"postCreateCommand": "chown -R 1000:1000 /var/www/html 2>/dev/null || true"
-	// "forwardPorts": [],
 	// "runServices": [],
 	// "shutdownAction": "none",
 }
