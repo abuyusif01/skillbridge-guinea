@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->string('role')->default('customer')->index();
             $table->string('city')->nullable();
-            $table->string('locale', 5)->default('fr');
+            $table->string('locale', 5)->default('en');
             $table->string('avatar_path')->nullable();
             $table->boolean('is_active')->default(true)->index();
             $table->timestamp('email_verified_at')->nullable();

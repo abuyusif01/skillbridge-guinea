@@ -1,7 +1,7 @@
 # SkillBridge Guinea
 
 FYP2 platform connecting skilled tradespeople with customers in Guinea.
-Laravel 12 backend with a bilingual French / English Blade frontend.
+Laravel 12 backend with an English-default, bilingual French / English Blade frontend.
 
 The original static design prototype is preserved in [`design/`](design/) —
 its UI, copy and component styles are the reference for the Blade views.
@@ -87,11 +87,11 @@ Demo users are skipped when `APP_ENV=production`.
   as read
 - Suspended accounts blocked at login and on active sessions
 - Role middleware (`role:admin`) and policies for booking/review/cancel actions
-- FR/EN and light/dark controls on every Blade page
+- English default with FR/EN toggle and light/dark controls on every Blade page
 
 The app is intended to run locally for the FYP demo. Admin worker verification,
-server-side locale switching, SMS delivery and queued mail remain; production
-deployment is out of scope.
+full server-side view translation, SMS delivery and queued mail remain;
+production deployment is out of scope.
 
 ### Notifications and password reset in local development
 
@@ -110,6 +110,14 @@ Run tests inside Sail:
 ```bash
 ./vendor/bin/sail test
 ```
+
+## Language
+
+The app opens in English (`APP_LOCALE=en`). The header FR/EN toggle writes a
+`skillbridge_locale` cookie; middleware applies it so server-generated labels
+(trade names, statuses) follow the choice, while the existing JavaScript
+dictionary swaps the static copy. A few custom validation messages are still
+French and are slated for full server-side translation.
 
 ## Presenter guide
 

@@ -46,7 +46,7 @@ class BookingController extends Controller
         ]);
 
         $worker->notify(
-            (new NewBookingRequest($booking))->locale($worker->locale ?: 'fr')
+            (new NewBookingRequest($booking))->locale($worker->locale ?: 'en')
         );
 
         return redirect()->route('bookings.success', $booking);
@@ -72,7 +72,7 @@ class BookingController extends Controller
         ])->save();
 
         $booking->worker->notify(
-            (new BookingCancelled($booking))->locale($booking->worker->locale ?: 'fr')
+            (new BookingCancelled($booking))->locale($booking->worker->locale ?: 'en')
         );
 
         return back()->with('status', 'Réservation annulée.');

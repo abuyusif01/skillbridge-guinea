@@ -27,7 +27,7 @@ class WorkerProfileUpdateTest extends TestCase
             ->get(route('worker.profile.edit'))
             ->assertOk()
             ->assertSee('Modifier mon profil')
-            ->assertSee('Électricien')
+            ->assertSee('Electrician')
             ->assertSee($worker->workerProfile->bio);
     }
 

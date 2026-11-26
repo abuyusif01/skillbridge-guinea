@@ -33,7 +33,7 @@ class UserFactory extends Factory
             'password' => static::$password ??= Hash::make('password'),
             'role' => UserRole::Customer,
             'city' => fake()->randomElement(['Kaloum', 'Matoto', 'Ratoma', 'Matam', 'Kankan', 'Labé']),
-            'locale' => 'fr',
+            'locale' => 'en',
             'is_active' => true,
             'remember_token' => Str::random(10),
         ];

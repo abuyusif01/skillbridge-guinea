@@ -185,7 +185,7 @@ class DemoDataSeeder extends Seeder
                 'phone' => $phone,
                 'password' => 'password',
                 'city' => $city,
-                'locale' => 'fr',
+                'locale' => 'en',
             ]
         );
 

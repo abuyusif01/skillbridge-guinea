@@ -39,7 +39,7 @@ class ReviewController extends Controller
         ]);
 
         $booking->worker->notify(
-            (new ReviewReceived($review))->locale($booking->worker->locale ?: 'fr')
+            (new ReviewReceived($review))->locale($booking->worker->locale ?: 'en')
         );
 
         return redirect()

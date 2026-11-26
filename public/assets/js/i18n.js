@@ -1,6 +1,7 @@
 /* Bilingual UI controller.
    French is the source language in the markup; JS swaps to English using
-   js/i18n-data.js. The choice is stored in localStorage. */
+   js/i18n-data.js. English is the default. The choice is stored in localStorage
+   and mirrored to a cookie so the server can localise dynamic labels. */
 (function () {
   "use strict";
 
@@ -12,7 +13,8 @@
   var metaEl = document.querySelector('meta[name="description"]');
   var titleOriginal = document.title;
   var metaOriginal = metaEl ? metaEl.getAttribute("content") : null;
-  var current = "fr";
+  var serverLocale = document.documentElement.getAttribute("data-server-locale") || "en";
+  var current = "en";
 
   function has(dict, key) {
     return Object.prototype.hasOwnProperty.call(dict, key);
@@ -27,8 +29,31 @@
     }
   }
 
+  var PATTERNS = [
+    [/^(\d+)\s+professionnels? disponibles?$/, "$1 professionals available"],
+    [/^(\d+)\s+professionnels?$/, "$1 professionals"],
+    [/^Page\s+(\d+)\s+sur\s+(\d+)$/, "Page $1 of $2"],
+    [/^(\d+)\s+avis$/, "$1 reviews"],
+    [/^(\d+)\s+utilisateurs? récents?$/, "$1 recent users"],
+    [/^(\d+)\s+réservations? en attente$/, "$1 pending bookings"],
+    [/^(\d+)\s+avis récents?$/, "$1 recent reviews"],
+    [/^(\d+)\s+notification(?:s)? non lue(?:s)?\.?$/, "$1 unread notifications"],
+    [/^Dès\s+([\d\s,]+)\s+GNF$/, "From $1 GNF"],
+    [/^Terminé le\s+(.+)$/, "Completed on $1"],
+    [/^Réserver\s+(.+)\s+—\s+SkillBridge Guinea$/, "Book $1 — SkillBridge Guinea"]
+  ];
+
   function translate(source) {
-    return current === "en" && has(DICT, source) ? DICT[source] : source;
+    if (current !== "en") return source;
+    if (has(DICT, source)) return DICT[source];
+
+    for (var i = 0; i < PATTERNS.length; i += 1) {
+      if (PATTERNS[i][0].test(source)) {
+        return source.replace(PATTERNS[i][0], PATTERNS[i][1]);
+      }
+    }
+
+    return source;
   }
 
   function translateTextNode(node) {
@@ -46,15 +71,16 @@
     }
 
     var trimmed = original.trim();
-    if (!trimmed || !has(DICT, trimmed)) {
+    if (!trimmed) {
       node.nodeValue = original;
       return;
     }
 
+    var translated = translate(trimmed);
     var start = original.indexOf(trimmed);
     node.nodeValue =
       original.slice(0, start) +
-      DICT[trimmed] +
+      translated +
       original.slice(start + trimmed.length);
   }
 
@@ -133,18 +159,46 @@
       /* storage may be unavailable — the language still applies for this page */
     }
 
+    try {
+      document.cookie =
+        "skillbridge_locale=" + current + "; path=/; max-age=31536000; samesite=lax";
+    } catch (error) {
+      /* cookies may be unavailable — the language still applies for this page */
+    }
+
     window.dispatchEvent(
       new CustomEvent("sb:langchange", { detail: { lang: current } })
     );
   }
 
   storeAttributes();
-  apply(readStored() || "fr");
+  var initial = readStored() || serverLocale;
+  apply(initial);
+
+  // Keep the server-rendered dynamic labels in sync with the stored choice.
+  if (initial !== serverLocale) {
+    try {
+      if (!sessionStorage.getItem("sb-locale-sync")) {
+        sessionStorage.setItem("sb-locale-sync", "1");
+        window.location.reload();
+      }
+    } catch (error) {
+      /* storage unavailable — keep the client-side translation */
+    }
+  }
+
   document.documentElement.classList.remove("i18n-pending");
 
   document.querySelectorAll(".lang-switch [data-lang]").forEach(function (button) {
     button.addEventListener("click", function () {
-      apply(button.getAttribute("data-lang"));
+      var lang = button.getAttribute("data-lang");
+      apply(lang);
+
+      // Dynamic labels (trade names, statuses, validation) are rendered by
+      // Laravel using the server locale. Reload so those follow the toggle.
+      if (lang !== serverLocale) {
+        window.location.reload();
+      }
     });
   });
 

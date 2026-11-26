@@ -115,7 +115,7 @@ class User extends Authenticatable
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(
-            (new ResetPasswordNotification($token))->locale($this->locale ?: 'fr')
+            (new ResetPasswordNotification($token))->locale($this->locale ?: 'en')
         );
     }
 }

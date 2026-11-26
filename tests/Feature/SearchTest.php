@@ -29,7 +29,7 @@ class SearchTest extends TestCase
         $this->get('/search')
             ->assertOk()
             ->assertSee($worker->name)
-            ->assertSee('Électricien');
+            ->assertSee('Electrician');
     }
 
     public function test_search_filters_by_trade_and_city(): void

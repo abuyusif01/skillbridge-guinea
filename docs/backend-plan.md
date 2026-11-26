@@ -6,8 +6,9 @@
 - Repository root is the Laravel app; `design/` keeps the static prototype.
 - Local development through Laravel Sail so Windows and Linux match.
 - Server-rendered pages; JavaScript only for progressive enhancement.
-- Localisation server-side (`lang/fr`, `lang/en`, locale middleware), not the
-  prototype's browser dictionary.
+- English is the default UI language. A locale cookie + middleware localise
+  server-generated labels; static copy is swapped by the existing dictionary.
+  Full server-side view translation remains future work.
 - Windows user runs locally; production will be a Linux host with HTTPS.
 
 ## Domain model
@@ -23,7 +24,7 @@
 | password | bcrypt |
 | role | `customer`, `worker`, `admin` |
 | city | prefecture / commune |
-| locale | `fr` / `en` |
+| locale | `en` default, `fr` available |
 | avatar_path | nullable |
 | is_active | admin suspension |
 | email_verified_at | nullable |
@@ -133,8 +134,8 @@ notifications power the in-app inbox; the same events send an e-mail.
    registration, role middleware, auth tests. *(done in `feat/auth-roles`)*
 3. **Schema** — trades, worker profiles, bookings, reviews; factories + seeders
    with the six trades and demo workers from the design. *(done in scaffold)*
-4. **Blade frontend** — layout/header/footer from `design/`, FR/EN translations,
-   theme toggle server-side. Landing page and auth screens are live; search,
+4. **Blade frontend** — layout/header/footer from `design/`, English-default
+   FR/EN toggle, theme toggle. Landing page and auth screens are live; search,
    profile and booking pages remain. Assets currently mirror
    `design/css|js` under `public/assets`; migrate them to Vite.
 5. **Customer flow** — search, filters, worker profile, booking request. *(done)*
@@ -145,9 +146,9 @@ notifications power the in-app inbox; the same events send an e-mail.
    24 new feature tests. *(done)*
 9. **Profile + cancellation** — worker profile editing and availability,
    customer cancellation with worker notification, 14 new feature tests. *(done)*
-10. **Tests + local delivery** — 98 feature tests and CI green; admin worker
-    verification, server-side locale switching, SMS notifications and queued
-    mail remain. Production deployment is out of scope for the local FYP demo.
+10. **Tests + local delivery** — 101 feature tests and CI green; admin worker
+    verification, full server-side view translation, SMS notifications and
+    queued mail remain. Production deployment is out of scope for the local FYP demo.
 
 ## Open decisions
 

@@ -56,7 +56,7 @@ class WorkerBookingController extends Controller
         $customer = $booking->customer;
 
         $customer->notify(
-            (new BookingStatusChanged($booking))->locale($customer->locale ?: 'fr')
+            (new BookingStatusChanged($booking))->locale($customer->locale ?: 'en')
         );
     }
 }

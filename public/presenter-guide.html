@@ -568,7 +568,7 @@
       <a href="#what">2. What you are presenting</a>
       <a href="#before">3. Before the demo</a>
       <a href="#demo">4. The 10-minute demo</a>
-      <a href="#labels" class="sub">French labels</a>
+      <a href="#labels" class="sub">Language</a>
       <a href="#code">5. If someone asks about the code</a>
       <a href="#database">6. Where the database is</a>
       <a href="#qa">7. Questions and answers</a>
@@ -594,7 +594,7 @@
         <div class="hero-meta">
           <span class="badge">Local demo</span>
           <span class="badge">About 10 minutes</span>
-          <span class="badge green">98 automated tests</span>
+          <span class="badge green">101 automated tests</span>
           <span class="badge amber">Demo data is fictional</span>
         </div>
 
@@ -678,8 +678,8 @@
           </div>
         </div>
         <p class="small muted" style="margin-top:0.5rem">
-          The demo database has 6 trades, 4 professionals, 7 bookings and 2 reviews. The interface is in French;
-          the main screens have an English toggle and a light/dark theme.
+          The demo database has 6 trades, 4 professionals, 7 bookings and 2 reviews. The interface opens in English;
+          the FR button switches to French, and a light/dark theme is always available.
         </p>
       </div>
 
@@ -694,7 +694,7 @@
         <div class="grid-4" style="margin-top:0.6rem">
           <div><strong>Docker + Sail</strong><br><span class="small muted">Runs the app on any laptop</span></div>
           <div><strong>Plain CSS + JS</strong><br><span class="small muted">No front-end framework</span></div>
-          <div><strong>PHPUnit</strong><br><span class="small muted">98 automated tests</span></div>
+          <div><strong>PHPUnit</strong><br><span class="small muted">101 automated tests</span></div>
           <div><strong>GitHub Actions</strong><br><span class="small muted">Tests on every change</span></div>
         </div>
       </div>
@@ -802,8 +802,8 @@
       <p class="eyebrow">The demo</p>
       <h2>The 10-minute demo</h2>
       <p class="lead">
-        Follow the steps in order. Each step has what to click, what to say, and what to point at. The app is in
-        French; the English meanings are in the table below.
+        Follow the steps in order. Each step has what to click, what to say, and what to point at. The app opens in
+        English; click <strong>FR</strong> in the header to switch to French, and the steps below use the English labels.
       </p>
 
       <div class="card">
@@ -831,25 +831,12 @@
       </div>
 
       <div id="labels" class="card" style="margin-top:0.9rem">
-        <h3>French labels → English meaning</h3>
-        <div class="grid-2">
-          <div class="small">
-            <p><strong>Rechercher</strong> — Search<br>
-            <strong>Tableau de bord</strong> — Dashboard<br>
-            <strong>Se connecter / Se déconnecter</strong> — Log in / Log out<br>
-            <strong>En attente</strong> — Pending<br>
-            <strong>Acceptées</strong> — Accepted<br>
-            <strong>Terminées</strong> — Completed</p>
-          </div>
-          <div class="small">
-            <p><strong>Accepter / Décliner</strong> — Accept / Decline<br>
-            <strong>Marquer comme terminé</strong> — Mark as completed<br>
-            <strong>Annuler la réservation</strong> — Cancel booking<br>
-            <strong>Laisser un avis</strong> — Leave a review<br>
-            <strong>Administration</strong> — Admin panel<br>
-            <strong>Utilisateurs / Avis / Réservations</strong> — Users / Reviews / Bookings</p>
-          </div>
-        </div>
+        <h3>Language</h3>
+        <p class="small" style="margin:0">
+          The app opens in <strong>English</strong>. Click <strong>FR</strong> in the header to switch to French, and
+          <strong>EN</strong> to switch back. The choice is remembered. The demo steps below use the English labels;
+          if the screen is in French, the same labels are translated in the interface.
+        </p>
       </div>
 
       <!-- STEP 1 -->
@@ -860,8 +847,8 @@
           <div class="step-body">
             <div class="do"><strong>Do:</strong> open <strong>http://localhost:8000</strong> in the normal browser window.</div>
             <div class="say"><strong>Say:</strong> “This is SkillBridge Guinea, a local marketplace for tradespeople. Customers can search, compare profiles and reviews, and send a free booking request. Professionals manage those requests from a dashboard, and admins moderate the platform.”</div>
-            <p><strong>Point at:</strong> the headline, the three stats (4 professionals, 3 cities, 5.0 average rating), “Comment ça marche ?” (the three steps), the six trade cards, and the featured professional card.</p>
-            <p class="screenshot-note">The interface is French. Use the label table above if you need to translate.</p>
+            <p><strong>Point at:</strong> the headline, the three stats (4 professionals, 3 cities, 5.0 average rating), “How it works” (the three steps), the six trade cards, and the featured professional card.</p>
+            <p class="screenshot-note">The app opens in English. Click FR at any time to switch to French.</p>
           </div>
         </div>
       </div>
@@ -872,10 +859,10 @@
         <div>
           <div class="step-head"><h3>Search and filters</h3><span class="time">1 min</span></div>
           <div class="step-body">
-            <div class="do"><strong>Do:</strong> click <strong>Rechercher</strong> (or go to <strong>/search</strong>). Set <strong>Métier</strong> to <strong>Électricien</strong>, <strong>Localisation</strong> to <strong>Kaloum</strong>, and <strong>Note minimale</strong> to <strong>4★ et plus</strong>. Click <strong>Appliquer les filtres</strong>.</div>
+            <div class="do"><strong>Do:</strong> click <strong>Search</strong> (or go to <strong>/search</strong>). Set <strong>Trade</strong> to <strong>Electrician</strong>, <strong>Location</strong> to <strong>Kaloum</strong>, and <strong>Minimum rating</strong> to <strong>4★ and up</strong>. Click <strong>Apply filters</strong>.</div>
             <div class="say"><strong>Say:</strong> “Search runs against the MySQL database. The filters combine, and the list updates to show only professionals who match. Each card shows the rating, availability and starting price.”</div>
-            <p><strong>Point at:</strong> the result count, “Triés par : meilleure note”, the “Vérifié” and “Disponible” badges, and the starting price.</p>
-            <div class="do"><strong>Reset:</strong> click <strong>Réinitialiser</strong> so the next step starts from all professionals.</div>
+            <p><strong>Point at:</strong> the result count, “Sorted by: top rated”, the “Verified” and “Available” badges, and the starting price.</p>
+            <div class="do"><strong>Reset:</strong> click <strong>Reset</strong> so the next step starts from all professionals.</div>
             <div class="note"><strong>About pagination:</strong> results paginate at six per page. The demo has four professionals, so pagination does not appear here. If asked, say it is built in for larger datasets.</div>
           </div>
         </div>
@@ -887,9 +874,9 @@
         <div>
           <div class="step-head"><h3>The professional profile</h3><span class="time">1 min</span></div>
           <div class="step-body">
-            <div class="do"><strong>Do:</strong> click <strong>Voir le profil</strong> on <strong>Mamadou Diallo</strong> (electrician, Kaloum) — or <strong>Voir son profil</strong> on the featured card on the home page.</div>
+            <div class="do"><strong>Do:</strong> click <strong>View profile</strong> on <strong>Mamadou Diallo</strong> (electrician, Kaloum) — or <strong>View profile</strong> on the featured card on the home page.</div>
             <div class="say"><strong>Say:</strong> “This is the public profile: trade, experience, service area, starting rate, rating, reviews and completed jobs. The badges show that the profile is verified and currently available.”</div>
-            <p><strong>Point at:</strong> the rating and reviews, the “À partir de … GNF” price, “Réserver ce travailleur”, and “Aucun paiement en ligne”.</p>
+            <p><strong>Point at:</strong> the rating and reviews, the “From … GNF” price, “Book this professional”, and “No online payment”.</p>
             <p class="small muted">In this demo the seeded professionals are pre-verified; admin-side verification is a future feature.</p>
           </div>
         </div>
@@ -901,18 +888,18 @@
         <div>
           <div class="step-head"><h3>Customer sends a booking</h3><span class="time">2 min</span></div>
           <div class="step-body">
-            <div class="do"><strong>Do:</strong> switch to the <strong>customer</strong> tab (Amadou). If you are not logged in, use <strong>Se connecter</strong> with <code>amadou@example.test</code> / <code>password</code>. Open a professional profile and click <strong>Réserver ce travailleur</strong>.</div>
+            <div class="do"><strong>Do:</strong> switch to the <strong>customer</strong> tab (Amadou). If you are not logged in, use <strong>Log in</strong> with <code>amadou@example.test</code> / <code>password</code>. Open a professional profile and click <strong>Book this professional</strong>.</div>
             <p><strong>Fill the form:</strong></p>
             <ul>
-              <li><strong>Description du travail:</strong> “Réparer une prise dans la cuisine.”</li>
-              <li><strong>Date souhaitée:</strong> tomorrow (any future date).</li>
-              <li><strong>Créneau:</strong> Matin.</li>
-              <li><strong>Quartier / adresse:</strong> “Kaloum, rue KA-020”.</li>
-              <li><strong>Votre numéro de contact:</strong> already filled.</li>
+              <li><strong>Job description:</strong> “Fix a socket in the kitchen.”</li>
+              <li><strong>Preferred date:</strong> tomorrow (any future date).</li>
+              <li><strong>Time slot:</strong> Morning (8 am – 12 pm).</li>
+              <li><strong>Area / address:</strong> “Kaloum, rue KA-020”.</li>
+              <li><strong>Your contact number:</strong> already filled.</li>
             </ul>
-            <div class="do"><strong>Do:</strong> click <strong>Envoyer la demande</strong>.</div>
+            <div class="do"><strong>Do:</strong> click <strong>Send request</strong>.</div>
             <div class="say"><strong>Say:</strong> “That writes a booking row to the database and sends a notification to the professional. No payment is taken — the customer and the professional agree directly.”</div>
-            <p><strong>Point at:</strong> the success page “Demande envoyée !” and the button <strong>Voir mes réservations</strong>.</p>
+            <p><strong>Point at:</strong> the success page “Request sent!” and the button <strong>View my bookings</strong>.</p>
           </div>
         </div>
       </div>
@@ -923,10 +910,10 @@
         <div>
           <div class="step-head"><h3>Customer dashboard and cancellation</h3><span class="time">1 min</span></div>
           <div class="step-body">
-            <div class="do"><strong>Do:</strong> open <strong>Tableau de bord</strong> in the customer tab. Show <strong>Vos réservations</strong>.</div>
+            <div class="do"><strong>Do:</strong> open <strong>Dashboard</strong> in the customer tab. Show <strong>Your bookings</strong>.</div>
             <div class="say"><strong>Say:</strong> “Customers can track every request, see its status, cancel while it is still pending or accepted, and review a completed job.”</div>
-            <p><strong>Point at:</strong> the status badges, the <strong>Annuler la réservation</strong> button on an active booking, and <strong>Laisser un avis</strong> on a completed booking.</p>
-            <div class="do"><strong>Optional:</strong> click <strong>Annuler la réservation</strong> on a pending booking, confirm, and show the status change to <strong>Annulée</strong>.</div>
+            <p><strong>Point at:</strong> the status badges, the <strong>Cancel booking</strong> button on an active booking, and <strong>Leave a review</strong> on a completed booking.</p>
+            <div class="do"><strong>Optional:</strong> click <strong>Cancel booking</strong> on a pending booking, confirm, and show the status change to <strong>Cancelled</strong>.</div>
             <div class="warn"><strong>Careful:</strong> only cancel a booking you do not need later. The worker still has another pending request for the next step.</div>
           </div>
         </div>
@@ -938,11 +925,11 @@
         <div>
           <div class="step-head"><h3>Worker dashboard</h3><span class="time">2 min</span></div>
           <div class="step-body">
-            <div class="do"><strong>Do:</strong> switch to the <strong>worker</strong> tab (Mamadou) and open <strong>Tableau de bord</strong>.</div>
+            <div class="do"><strong>Do:</strong> switch to the <strong>worker</strong> tab (Mamadou) and open <strong>Dashboard</strong>.</div>
             <div class="say"><strong>Say:</strong> “Workers see their requests grouped by status. They can accept, decline, or mark an accepted job as completed. The app enforces that a worker can only act on their own bookings.”</div>
-            <p><strong>Point at:</strong> the three tabs <strong>En attente</strong>, <strong>Acceptées</strong>, <strong>Terminées</strong>; the customer name, address and phone; and <strong>Appeler le client</strong>.</p>
-            <div class="do"><strong>Do:</strong> click <strong>Accepter</strong> on a pending request. Show it move to <strong>Acceptées</strong>. Then click <strong>Marquer comme terminé</strong> on an accepted job and show it in <strong>Terminées</strong>.</div>
-            <div class="do"><strong>Do:</strong> click <strong>Modifier mon profil</strong>. Show the editable fields and the availability switch, then click <strong>Enregistrer les modifications</strong>.</div>
+            <p><strong>Point at:</strong> the three tabs <strong>Pending</strong>, <strong>Accepted</strong>, <strong>Completed</strong>; the customer name, address and phone; and <strong>Call customer</strong>.</p>
+            <div class="do"><strong>Do:</strong> click <strong>Accept</strong> on a pending request. Show it move to <strong>Accepted</strong>. Then click <strong>Mark as completed</strong> on an accepted job and show it in <strong>Completed</strong>.</div>
+            <div class="do"><strong>Do:</strong> click <strong>Edit my profile</strong>. Show the editable fields and the availability switch, then click <strong>Save changes</strong>.</div>
             <div class="say"><strong>Say:</strong> “Workers maintain their own profile and availability. If they switch availability off, they disappear from search immediately.”</div>
             <div class="warn"><strong>Careful:</strong> if you switch availability off, turn it back on before showing search again.</div>
           </div>
@@ -955,7 +942,7 @@
         <div>
           <div class="step-head"><h3>Notifications</h3><span class="time">30 sec</span></div>
           <div class="step-body">
-            <div class="do"><strong>Do:</strong> click the <strong>bell</strong> in the header (worker tab). Show the inbox. Click one notification and then <strong>Tout marquer comme lu</strong>.</div>
+            <div class="do"><strong>Do:</strong> click the <strong>bell</strong> in the header (worker tab). Show the inbox. Click one notification and then <strong>Mark all as read</strong>.</div>
             <div class="say"><strong>Say:</strong> “Every important event — a new request, an acceptance, a cancellation, a review — creates a notification in the database and an email. The bell shows the unread count.”</div>
             <p><strong>Point at:</strong> the different notification types and the unread badge.</p>
           </div>
@@ -968,7 +955,7 @@
         <div>
           <div class="step-head"><h3>Leave a review</h3><span class="time">1 min</span></div>
           <div class="step-body">
-            <div class="do"><strong>Do:</strong> switch to the <strong>customer</strong> tab. On the dashboard, find a completed booking and click <strong>Laisser un avis</strong>. Choose 5 stars, add “Travail rapide et soigné.”, and submit.</div>
+            <div class="do"><strong>Do:</strong> switch to the <strong>customer</strong> tab. On the dashboard, find a completed booking and click <strong>Leave a review</strong>. Choose 5 stars, add “Fast and tidy work.”, and submit.</div>
             <div class="say"><strong>Say:</strong> “Only the customer can review, only after completion, and only once per booking. The rating updates the professional’s public profile.”</div>
             <p><strong>Point at:</strong> the review on the customer dashboard and then on the worker’s public profile.</p>
           </div>
@@ -981,9 +968,9 @@
         <div>
           <div class="step-head"><h3>Admin panel</h3><span class="time">1 min</span></div>
           <div class="step-body">
-            <div class="do"><strong>Do:</strong> switch to the <strong>admin</strong> tab (<code>admin@skillbridge.test</code>). Open <strong>Administration</strong>.</div>
+            <div class="do"><strong>Do:</strong> switch to the <strong>admin</strong> tab (<code>admin@skillbridge.test</code>). Open <strong>Admin</strong>.</div>
             <div class="say"><strong>Say:</strong> “Admins can see the platform at a glance, suspend or reactivate accounts, remove inappropriate reviews, and inspect bookings. Suspended users are blocked at login and logged out of active sessions.”</div>
-            <p><strong>Point at:</strong> the stats, the tabs <strong>Utilisateurs</strong>, <strong>Avis</strong>, <strong>Réservations</strong>, and the <strong>Suspendre</strong> / <strong>Réactiver</strong> actions.</p>
+            <p><strong>Point at:</strong> the stats, the tabs <strong>Users</strong>, <strong>Reviews</strong>, <strong>Bookings</strong>, and the <strong>Suspend</strong> / <strong>Reactivate</strong> actions.</p>
             <div class="warn"><strong>Do not</strong> suspend the admin, Amadou or Mamadou during the demo — you still need them. If you want to show the action, suspend a different user and reactivate them immediately.</div>
           </div>
         </div>
@@ -995,9 +982,9 @@
         <div>
           <div class="step-head"><h3>Language and theme</h3><span class="time">30 sec</span></div>
           <div class="step-body">
-            <div class="do"><strong>Do:</strong> click <strong>EN</strong> in the header, then the moon/sun button. Switch back to <strong>FR</strong> and light mode.</div>
-            <div class="say"><strong>Say:</strong> “The header has a French/English toggle and a light/dark theme. The core customer, worker and admin screens switch to English; the newest screens are still French while server-side translation is finished.”</div>
-            <div class="note">Be honest if asked: the English toggle covers the main screens. A few newer screens and server-side validation messages are still French. That is documented as future work.</div>
+            <div class="do"><strong>Do:</strong> the app is already on <strong>EN</strong>. Click <strong>FR</strong> to show the French version, then <strong>EN</strong> to switch back. Toggle the moon/sun button and return to light mode.</div>
+            <div class="say"><strong>Say:</strong> “The app opens in English and the header has a French/English toggle plus a light/dark theme. The choice is remembered for the next visit.”</div>
+            <div class="note">Be honest if asked: the interface and dynamic labels switch languages, but a few server-side validation messages are still being localised.</div>
           </div>
         </div>
       </div>
@@ -1005,7 +992,7 @@
       <div class="card" style="margin-top:0.9rem">
         <h3>Optional: password reset</h3>
         <p class="small">Only if you have 30 seconds and want to show account recovery.</p>
-        <div class="do"><strong>Do:</strong> log out, click <strong>Mot de passe oublié ?</strong>, enter <code>amadou@example.test</code>, and submit.</div>
+        <div class="do"><strong>Do:</strong> log out, click <strong>Forgot password?</strong>, enter <code>amadou@example.test</code>, and submit.</div>
         <div class="say"><strong>Say:</strong> “The app sends a reset link. In local development, email is written to a log file instead of being sent.”</div>
         <div class="note">Do not open the log file during the demo unless a lecturer specifically asks. The path is <code>storage/logs/laravel.log</code>.</div>
       </div>
@@ -1052,7 +1039,7 @@
               <tr><td>Where is the table structure?</td><td><code>database/migrations/</code></td><td>The recipe that creates the MySQL tables.</td></tr>
               <tr><td>Where is the demo data?</td><td><code>database/seeders/</code></td><td>Trades and demo accounts/bookings/reviews.</td></tr>
               <tr><td>Where is the design?</td><td><code>public/assets/css/style.css</code> + <code>resources/views/</code></td><td>The shared look and the page markup.</td></tr>
-              <tr><td>Where are the tests?</td><td><code>tests/Feature/</code> and <code>tests/Unit/</code></td><td>98 automated checks covering the flows.</td></tr>
+              <tr><td>Where are the tests?</td><td><code>tests/Feature/</code> and <code>tests/Unit/</code></td><td>101 automated checks covering the flows.</td></tr>
               <tr><td>Where is the plan?</td><td><code>docs/backend-plan.md</code></td><td>The original design decisions and milestones.</td></tr>
             </tbody>
           </table>
@@ -1128,8 +1115,8 @@ exit;</code></div>
       <div class="card">
         <h3>Show the data without SQL</h3>
         <p class="small">
-          The easiest option is the app itself: log in as admin and open <strong>Administration</strong>. The
-          <strong>Utilisateurs</strong>, <strong>Avis</strong> and <strong>Réservations</strong> tabs show the same
+          The easiest option is the app itself: log in as admin and open <strong>Admin</strong>. The
+          <strong>Users</strong>, <strong>Reviews</strong> and <strong>Bookings</strong> tabs show the same
           data in a human-friendly way. Use this in the demo; use SQL only if a lecturer asks to see the raw tables.
         </p>
       </div>
@@ -1204,9 +1191,9 @@ exit;</code></div>
       <details class="qa">
         <summary>Does it support English?</summary>
         <div class="answer">
-          The interface has a French/English toggle and a light/dark theme. The main customer, worker and admin
-          screens switch to English; a few newer screens (such as profile editing) and server-side validation
-          messages are still French. Full server-side translation is documented as future work.
+          English is the default. The header has a French/English toggle and a light/dark theme. Switching language
+          also reloads the page so server-generated labels follow the choice. A few server-side validation messages
+          are still being localised.
         </div>
       </details>
 
@@ -1237,7 +1224,7 @@ exit;</code></div>
       <details class="qa">
         <summary>How do you know it works?</summary>
         <div class="answer">
-          There are 98 automated feature tests covering registration, login, roles, search, booking, cancellation,
+          There are 101 automated feature tests covering registration, login, roles, search, booking, cancellation,
           reviews, admin actions, profile editing, password reset and notifications. The test suite runs on SQLite
           locally and MySQL 8.4 in GitHub Actions.
         </div>
@@ -1336,7 +1323,7 @@ exit;</code></div>
             <h3>What to say first</h3>
             <p class="small">“SkillBridge Guinea connects customers with trusted tradespeople. Customers search and book; professionals manage requests; admins moderate.”</p>
             <h3 style="margin-top:0.8rem">If asked about the code</h3>
-            <p class="small">“Laravel + MySQL. Routes → controllers → models → Blade views. The flows are covered by 98 automated tests.”</p>
+            <p class="small">“Laravel + MySQL. Routes → controllers → models → Blade views. The flows are covered by 101 automated tests.”</p>
             <h3 style="margin-top:0.8rem">If asked where the data is</h3>
             <p class="small">“MySQL 8 in Docker, database <code>skillbridge</code>. The admin panel shows the same data without SQL.”</p>
             <h3 style="margin-top:0.8rem">If something breaks</h3>

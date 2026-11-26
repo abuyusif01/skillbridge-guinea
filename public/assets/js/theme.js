@@ -24,9 +24,14 @@
   var initial = readStored() || preferred();
   root.setAttribute("data-theme", initial);
 
-  /* Avoid a French flash for visitors whose saved language is English. */
+  /* Avoid a French flash: English is the default and the saved choice wins. */
   try {
-    if (localStorage.getItem("sb-lang") === "en") {
+    var storedLang = localStorage.getItem("sb-lang");
+    var serverLang = root.getAttribute("data-server-locale") || "en";
+    var uiLang =
+      storedLang === "fr" || storedLang === "en" ? storedLang : serverLang;
+
+    if (uiLang === "en") {
       root.lang = "en";
       root.classList.add("i18n-pending");
       window.setTimeout(function () {

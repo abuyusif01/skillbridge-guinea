@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-server-locale="{{ app()->getLocale() }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -56,8 +56,8 @@
         @endauth
 
         <div class="lang-switch" role="group" aria-label="Language / Langue">
-          <button type="button" data-lang="fr" class="active" aria-pressed="true">FR</button>
-          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+          <button type="button" data-lang="fr" aria-pressed="false">FR</button>
+          <button type="button" data-lang="en" class="active" aria-pressed="true">EN</button>
         </div>
         <button class="theme-toggle" type="button" aria-label="Activer le mode sombre" aria-pressed="false" title="Activer le mode sombre">
           <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg>
