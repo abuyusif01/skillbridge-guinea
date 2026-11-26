@@ -46,12 +46,13 @@ composer install
 ./vendor/bin/sail up -d
 ./vendor/bin/sail artisan key:generate
 ./vendor/bin/sail artisan migrate --seed
-
-./vendor/bin/sail npm install
-./vendor/bin/sail npm run dev
 ```
 
 Open <http://localhost:8000>.
+
+The Blade layout loads its CSS and JS from `public/assets`, so no frontend build is
+needed for the demo. `npm install` / `npm run dev` are only needed for the planned
+Vite asset migration.
 
 > Rootless Docker on Linux: if storage or npm writes fail, run
 > `chmod -R a+rwX storage bootstrap/cache`, then use

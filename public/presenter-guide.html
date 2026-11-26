@@ -723,15 +723,23 @@
 
       <div class="card">
         <h3>Start the app</h3>
-        <p class="small">Open a terminal in the project root (the folder that contains <code>sample/</code>), then run:</p>
-        <div class="code"><button class="copy" type="button" data-copy="cmd-start">Copy</button><code id="cmd-start"><span class="prompt">$</span> cd sample
+        <p class="small"><strong>Fresh clone (first time):</strong></p>
+        <div class="code"><button class="copy" type="button" data-copy="cmd-start">Copy</button><code id="cmd-start"><span class="prompt">$</span> git clone https://github.com/abuyusif01/skillbridge-guinea.git
+<span class="prompt">$</span> cd skillbridge-guinea
+<span class="prompt">$</span> cp .env.example .env
+<span class="prompt">$</span> composer install
 <span class="prompt">$</span> ./vendor/bin/sail up -d
+<span class="prompt">$</span> ./vendor/bin/sail artisan key:generate
 <span class="prompt">$</span> ./vendor/bin/sail artisan migrate --seed</code></div>
+        <p class="small" style="margin-top:0.8rem"><strong>Every time after that:</strong></p>
+        <div class="code"><button class="copy" type="button" data-copy="cmd-start-daily">Copy</button><code id="cmd-start-daily"><span class="prompt">$</span> cd skillbridge-guinea   <span class="comment"># or your project folder</span>
+<span class="prompt">$</span> ./vendor/bin/sail up -d</code></div>
         <p class="small muted">
           On Windows, use an Ubuntu/WSL2 terminal and run the same commands from the project folder. Full Windows
           steps are in <code>docs/windows-setup.md</code>.
         </p>
-        <p class="small"><strong>First time only:</strong> if dependencies are missing, run <code>composer install</code> and <code>./vendor/bin/sail npm install</code> first.</p>
+        <p class="small"><strong>No frontend build is needed for the demo:</strong> the Blade layout loads CSS and JS
+          from <code>public/assets</code>. You can skip <code>npm</code> unless you are working on the planned Vite migration.</p>
       </div>
 
       <div class="card">
@@ -1100,12 +1108,12 @@
             </tbody>
           </table>
         </div>
-        <p class="small muted" style="margin-top:0.55rem">These values come from <code>sample/.env</code>. Do not change them during the demo.</p>
+        <p class="small muted" style="margin-top:0.55rem">These values come from <code>.env</code> in the project folder. Do not change them during the demo.</p>
       </div>
 
       <div class="card">
         <h3>Show the data from a terminal</h3>
-        <p class="small">From the <code>sample/</code> folder:</p>
+        <p class="small">From the project folder:</p>
         <div class="code"><button class="copy" type="button" data-copy="cmd-db">Copy</button><code id="cmd-db"><span class="prompt">$</span> ./vendor/bin/sail mysql
 <span class="comment"># inside MySQL:</span>
 SHOW DATABASES;
@@ -1263,8 +1271,8 @@ exit;</code></div>
         <table>
           <thead><tr><th>Symptom</th><th>What to do</th></tr></thead>
           <tbody>
-            <tr><td><code>localhost:8000</code> does not open</td><td>Start Docker Desktop. In <code>sample/</code>, run <code>./vendor/bin/sail up -d</code>, then <code>./vendor/bin/sail ps</code>.</td></tr>
-            <tr><td>“500” error page</td><td>Run <code>./vendor/bin/sail logs</code> and check <code>sample/storage/logs/laravel.log</code>. Often the database is not running.</td></tr>
+            <tr><td><code>localhost:8000</code> does not open</td><td>Start Docker Desktop. In the project folder, run <code>./vendor/bin/sail up -d</code>, then <code>./vendor/bin/sail ps</code>.</td></tr>
+            <tr><td>“500” error page</td><td>Run <code>./vendor/bin/sail logs</code> and check <code>storage/logs/laravel.log</code>. Often the database is not running.</td></tr>
             <tr><td>Database connection error</td><td>Run <code>./vendor/bin/sail ps</code>. If MySQL is not up, run <code>./vendor/bin/sail up -d</code>. Confirm <code>DB_HOST=mysql</code> in <code>.env</code>.</td></tr>
             <tr><td>Login fails</td><td>Use the exact demo email and password <code>password</code>. Clear cookies or use a fresh incognito window.</td></tr>
             <tr><td>“Too many attempts”</td><td>Wait one minute, or run <code>./vendor/bin/sail artisan cache:clear</code>.</td></tr>
@@ -1279,9 +1287,8 @@ exit;</code></div>
 
       <div class="grid-2" style="margin-top:0.9rem">
         <div class="card">
-          <h3>Useful commands (from the project root)</h3>
-          <div class="code"><button class="copy" type="button" data-copy="cmd-debug">Copy</button><code id="cmd-debug"><span class="prompt">$</span> cd sample
-<span class="prompt">$</span> ./vendor/bin/sail ps
+          <h3>Useful commands (from the project folder)</h3>
+          <div class="code"><button class="copy" type="button" data-copy="cmd-debug">Copy</button><code id="cmd-debug"><span class="prompt">$</span> ./vendor/bin/sail ps
 <span class="prompt">$</span> ./vendor/bin/sail logs
 <span class="prompt">$</span> ./vendor/bin/sail artisan cache:clear
 <span class="prompt">$</span> ./vendor/bin/sail artisan migrate:fresh --seed</code></div>
