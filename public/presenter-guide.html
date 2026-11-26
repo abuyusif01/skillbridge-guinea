@@ -1,0 +1,1451 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SkillBridge Guinea — Presenter's Guide</title>
+<meta name="description" content="A plain-English presenter guide for the SkillBridge Guinea FYP demo: what the app does, how to demo it, where the database is, and what to say about the code.">
+<style>
+  :root {
+    --ink: #0f172a;
+    --ink-2: #334155;
+    --muted: #64748b;
+    --line: #e2e8f0;
+    --bg: #f6f8fc;
+    --surface: #ffffff;
+    --brand: #1d4ed8;
+    --brand-dark: #1e3a8a;
+    --brand-soft: #eff6ff;
+    --green: #15803d;
+    --green-soft: #dcfce7;
+    --amber: #b45309;
+    --amber-soft: #fef3c7;
+    --red: #b91c1c;
+    --red-soft: #fee2e2;
+    --radius: 16px;
+    --shadow: 0 14px 40px -24px rgba(15, 23, 42, 0.35);
+    --font: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--brand); }
+  code, pre { font-family: var(--mono); }
+  ::selection { background: #bfdbfe; }
+
+  .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(12px);
+  }
+  .topbar-inner {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0.65rem 1.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .brand-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: var(--brand);
+    color: #fff;
+    font-size: 1rem;
+    box-shadow: 0 6px 14px -6px rgba(29, 78, 216, 0.7);
+  }
+  .brand small {
+    display: block;
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .topbar-actions { display: flex; align-items: center; gap: 0.55rem; flex-wrap: wrap; }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.25rem 0.55rem;
+    border-radius: 999px;
+    background: var(--brand-soft);
+    color: var(--brand-dark);
+    font-size: 0.72rem;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+  .badge.green { background: var(--green-soft); color: var(--green); }
+  .badge.amber { background: var(--amber-soft); color: var(--amber); }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    color: var(--ink-2);
+    font: inherit;
+    font-size: 0.82rem;
+    font-weight: 700;
+    cursor: pointer;
+    text-decoration: none;
+    transition: 0.15s ease;
+  }
+  .btn:hover { border-color: #bfdbfe; background: var(--brand-soft); color: var(--brand-dark); }
+  .btn.primary { background: var(--brand); border-color: var(--brand); color: #fff; }
+  .btn.primary:hover { background: var(--brand-dark); border-color: var(--brand-dark); color: #fff; }
+
+  .shell {
+    max-width: 1240px;
+    min-width: 0;
+    margin: 0 auto;
+    padding: 2rem 1.25rem 5rem;
+    display: grid;
+    grid-template-columns: 250px minmax(0, 1fr);
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .toc {
+    position: sticky;
+    top: 5.3rem;
+    align-self: start;
+    min-width: 0;
+    font-size: 0.88rem;
+  }
+  .toc-title {
+    margin: 0 0 0.5rem;
+    padding: 0 0.55rem;
+    color: var(--muted);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .toc nav { display: grid; gap: 0.1rem; min-width: 0; max-width: 100%; }
+  .toc nav a {
+    display: block;
+    padding: 0.42rem 0.55rem;
+    border-left: 2px solid transparent;
+    border-radius: 0 8px 8px 0;
+    color: var(--ink-2);
+    text-decoration: none;
+    transition: 0.15s ease;
+  }
+  .toc nav a:hover,
+  .toc nav a.active {
+    border-left-color: var(--brand);
+    background: var(--brand-soft);
+    color: var(--brand-dark);
+  }
+  .toc nav a.sub { padding-left: 1.15rem; font-size: 0.82rem; color: var(--muted); }
+  .toc-note {
+    margin-top: 1rem;
+    padding: 0.8rem;
+    border: 1px dashed #c7d2fe;
+    border-radius: 12px;
+    background: #f8faff;
+    color: var(--muted);
+    font-size: 0.78rem;
+  }
+
+  main { min-width: 0; max-width: 100%; }
+  section { scroll-margin-top: 5.5rem; margin-top: 2.6rem; }
+  section:first-of-type { margin-top: 0; }
+  .eyebrow {
+    margin: 0 0 0.35rem;
+    color: var(--brand);
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  h1, h2, h3, h4 { letter-spacing: -0.02em; }
+  h1 { margin: 0 0 0.6rem; font-size: clamp(2rem, 4vw, 3rem); line-height: 1.08; }
+  h2 { margin: 0 0 0.5rem; font-size: clamp(1.45rem, 2.6vw, 1.95rem); line-height: 1.18; }
+  h3 { margin: 0 0 0.35rem; font-size: 1.02rem; }
+  p { margin: 0.45rem 0; }
+  .lead { color: var(--ink-2); font-size: 1.05rem; max-width: 70ch; }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.82rem; }
+
+  .hero {
+    padding: clamp(1.4rem, 4vw, 2.6rem);
+    border: 1px solid #dbeafe;
+    border-radius: 24px;
+    background:
+      radial-gradient(700px 280px at 100% 0%, #dbeafe 0%, transparent 65%),
+      linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+    box-shadow: var(--shadow);
+  }
+  .hero h1 span { color: var(--brand); }
+  .hero-meta { display: flex; flex-wrap: wrap; gap: 0.45rem; margin: 1rem 0 0; }
+  .hero-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.8fr); gap: 1.4rem; align-items: start; }
+  .hero-card {
+    padding: 1rem;
+    border: 1px solid #dbeafe;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.85);
+  }
+  .hero-card h3 { font-size: 0.86rem; color: var(--brand-dark); }
+  .hero-card ul { margin: 0.45rem 0 0; padding-left: 1.1rem; color: var(--ink-2); font-size: 0.87rem; }
+  .hero-card li { margin: 0.3rem 0; }
+
+  .card {
+    padding: 1.15rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  }
+  .card + .card { margin-top: 0.9rem; }
+  .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.85rem; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.85rem; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.75rem; }
+
+  .say, .do, .warn, .note {
+    position: relative;
+    margin: 0.75rem 0;
+    padding: 0.85rem 1rem 0.85rem 2.35rem;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    font-size: 0.92rem;
+    background: var(--surface);
+  }
+  .say { border-color: #bfdbfe; background: #f8fbff; }
+  .do { border-color: #bbf7d0; background: #f7fef9; }
+  .warn { border-color: #fde68a; background: #fffdf5; }
+  .note { border-color: var(--line); background: #f8fafc; }
+  .say::before, .do::before, .warn::before, .note::before {
+    position: absolute;
+    left: 0.8rem;
+    top: 0.72rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    border-radius: 50%;
+    font-size: 0.72rem;
+    font-weight: 800;
+  }
+  .say::before { content: "”"; background: var(--brand); color: #fff; }
+  .do::before { content: "→"; background: var(--green); color: #fff; }
+  .warn::before { content: "!"; background: var(--amber); color: #fff; }
+  .note::before { content: "i"; background: var(--muted); color: #fff; font-family: Georgia, serif; }
+  .say strong, .do strong, .warn strong { color: var(--ink); }
+
+  .step {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    gap: 1rem;
+    padding: 1.15rem 1.25rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03);
+  }
+  .step + .step { margin-top: 0.9rem; }
+  .step-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 13px;
+    background: var(--brand);
+    color: #fff;
+    font-size: 1.05rem;
+    font-weight: 800;
+    box-shadow: 0 8px 18px -10px rgba(29, 78, 216, 0.8);
+  }
+  .step-head { display: flex; align-items: baseline; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+  .step-head h3 { margin: 0; font-size: 1.08rem; }
+  .time {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.18rem 0.5rem;
+    border-radius: 999px;
+    background: var(--brand-soft);
+    color: var(--brand-dark);
+    font-size: 0.7rem;
+    font-weight: 800;
+    white-space: nowrap;
+  }
+  .step-body { margin-top: 0.55rem; font-size: 0.92rem; }
+  .step-body ul { margin: 0.35rem 0; padding-left: 1.1rem; }
+  .step-body li { margin: 0.22rem 0; }
+  .screenshot-note {
+    margin-top: 0.5rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-style: italic;
+  }
+
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.88rem; min-width: 560px; }
+  thead th {
+    padding: 0.65rem 0.8rem;
+    background: #f8fafc;
+    color: var(--ink-2);
+    text-align: left;
+    font-size: 0.72rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  tbody td { padding: 0.65rem 0.8rem; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+  tbody tr:last-child td { border-bottom: 0; }
+  tbody tr:hover { background: #fbfdff; }
+  td code, th code { font-size: 0.82rem; background: #f1f5f9; padding: 0.08rem 0.3rem; border-radius: 5px; }
+
+  .checklist { display: grid; gap: 0.5rem; margin: 0.7rem 0 0; }
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.55rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--surface);
+    font-size: 0.9rem;
+    cursor: pointer;
+  }
+  .check-item input {
+    width: 18px;
+    height: 18px;
+    margin-top: 0.15rem;
+    accent-color: var(--brand);
+    flex: none;
+  }
+  .check-item input:checked + span { color: var(--muted); text-decoration: line-through; }
+
+  .accounts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; margin-top: 0.7rem; }
+  .account {
+    padding: 0.85rem 0.9rem;
+    border: 1px solid var(--line);
+    border-top: 4px solid var(--brand);
+    border-radius: 0 0 12px 12px;
+    background: var(--surface);
+  }
+  .account.worker { border-top-color: var(--green); }
+  .account.admin { border-top-color: var(--amber); }
+  .account h3 { margin: 0 0 0.15rem; font-size: 0.92rem; }
+  .account p { margin: 0.1rem 0; color: var(--muted); font-size: 0.78rem; }
+  .account .cred { display: block; margin-top: 0.45rem; font-family: var(--mono); font-size: 0.78rem; color: var(--ink); word-break: break-all; }
+  .account .pw { color: var(--brand); font-weight: 800; }
+
+  .code {
+    position: relative;
+    margin: 0.65rem 0;
+    padding: 0.95rem 1rem;
+    border-radius: 12px;
+    background: #0b1220;
+    color: #e2e8f0;
+    font-family: var(--mono);
+    font-size: 0.83rem;
+    line-height: 1.65;
+    overflow-x: auto;
+    white-space: pre;
+  }
+  .code .copy {
+    position: absolute;
+    top: 0.45rem;
+    right: 0.45rem;
+    padding: 0.25rem 0.5rem;
+    border: 1px solid #334155;
+    border-radius: 7px;
+    background: #111c2e;
+    color: #cbd5e1;
+    font: inherit;
+    font-size: 0.68rem;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .code .copy:hover { background: #1e293b; color: #fff; }
+  .code .prompt { color: #93c5fd; }
+  .code .comment { color: #94a3b8; }
+
+  .flow {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.45rem;
+    align-items: stretch;
+    margin: 0.8rem 0;
+  }
+  .flow-node {
+    position: relative;
+    padding: 0.75rem 0.65rem;
+    border: 1px solid #dbeafe;
+    border-radius: 12px;
+    background: #f8fbff;
+    text-align: center;
+  }
+  .flow-node strong { display: block; font-size: 0.82rem; color: var(--brand-dark); }
+  .flow-node span { display: block; margin-top: 0.15rem; color: var(--muted); font-size: 0.7rem; line-height: 1.35; }
+  .flow-node:not(:last-child)::after {
+    content: "→";
+    position: absolute;
+    right: -0.48rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--brand);
+    font-weight: 800;
+    font-size: 0.9rem;
+  }
+
+  details.qa {
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    background: var(--surface);
+    padding: 0.8rem 1rem;
+  }
+  details.qa + details.qa { margin-top: 0.6rem; }
+  details.qa summary {
+    cursor: pointer;
+    font-weight: 700;
+    color: var(--ink);
+    list-style: none;
+  }
+  details.qa summary::-webkit-details-marker { display: none; }
+  details.qa summary::before {
+    content: "+";
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-right: 0.45rem;
+    border-radius: 6px;
+    background: var(--brand-soft);
+    color: var(--brand);
+    font-weight: 800;
+    font-size: 0.8rem;
+  }
+  details.qa[open] summary { color: var(--brand-dark); }
+  details.qa[open] summary::before { content: "−"; }
+  details.qa .answer { margin: 0.55rem 0 0 1.65rem; color: var(--ink-2); font-size: 0.9rem; }
+
+  .callout {
+    padding: 1rem 1.1rem;
+    border-left: 4px solid var(--brand);
+    border-radius: 0 12px 12px 0;
+    background: var(--brand-soft);
+    color: var(--ink-2);
+    font-size: 0.92rem;
+  }
+  .callout strong { color: var(--brand-dark); }
+  .callout.warn { border-left-color: var(--amber); background: var(--amber-soft); }
+  .callout.danger { border-left-color: var(--red); background: var(--red-soft); }
+
+  .cheat {
+    border: 2px solid var(--brand);
+    border-radius: 20px;
+    background: #fff;
+    padding: 1.25rem;
+    box-shadow: var(--shadow);
+  }
+  .cheat-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+  .cheat h3 { margin: 0 0 0.4rem; font-size: 0.95rem; color: var(--brand-dark); }
+  .cheat ol, .cheat ul { margin: 0.3rem 0; padding-left: 1.15rem; font-size: 0.86rem; }
+  .cheat li { margin: 0.22rem 0; }
+
+  footer {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 1.5rem 1.25rem 3rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .page-break { break-before: page; }
+  .no-print { }
+  @media (max-width: 980px) {
+    .shell { grid-template-columns: 1fr; gap: 1.5rem; }
+    .toc { position: static; }
+    .toc nav { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .toc-note { display: none; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .flow { grid-template-columns: 1fr; }
+    .flow-node:not(:last-child)::after { content: "↓"; right: 50%; top: auto; bottom: -0.75rem; transform: translateX(50%); }
+  }
+  @media (max-width: 760px) {
+    .grid-2, .grid-3, .grid-4, .accounts, .cheat-grid { grid-template-columns: 1fr; }
+    .topbar-inner { padding: 0.55rem 0.9rem; }
+    .brand small { display: none; }
+    .step { grid-template-columns: 36px minmax(0, 1fr); padding: 1rem; }
+    .step-num { width: 36px; height: 36px; border-radius: 10px; font-size: 0.92rem; }
+    .toc { position: static; }
+    .toc nav { display: flex; gap: 0.35rem; overflow-x: auto; padding-bottom: 0.3rem; }
+    .toc nav a {
+      flex: none;
+      padding: 0.35rem 0.6rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 0.78rem;
+      white-space: nowrap;
+    }
+    .toc nav a.sub { display: none; }
+    .toc-note { display: none; }
+  }
+  @media (max-width: 560px) {
+    .topbar-actions .badge { display: none; }
+  }
+  @media print {
+    @page { margin: 12mm; }
+    body { background: #fff; font-size: 9.6pt; line-height: 1.42; }
+    .topbar, .toc, .no-print, .copy { display: none !important; }
+    .shell { display: block; max-width: none; padding: 0; }
+    main { max-width: none; }
+    section { margin-top: 1rem; scroll-margin-top: 0; }
+    h1 { font-size: 1.8rem; }
+    h2 { font-size: 1.3rem; }
+    .hero, .card, .step, .cheat, details.qa { box-shadow: none; }
+    .hero { background: #fff; padding: 1rem; }
+    .card { padding: 0.7rem 0.85rem; }
+    .step { padding: 0.65rem 0.8rem; }
+    .step-num { width: 32px; height: 32px; border-radius: 9px; font-size: 0.85rem; }
+    .step { grid-template-columns: 32px minmax(0, 1fr); gap: 0.65rem; }
+    .step, .card, .qa, .code, table, .callout { break-inside: auto; }
+    .qa, .code, table, .callout, .say, .do, .warn { break-inside: avoid; }
+    .page-break { break-before: page; }
+    a { color: inherit; text-decoration: none; }
+    .badge { border: 1px solid #cbd5e1; }
+  }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark" aria-hidden="true">S</span>
+      <span>SkillBridge Guinea<small>Presenter’s guide · local FYP demo</small></span>
+    </a>
+    <div class="topbar-actions">
+      <span class="badge green">No coding needed</span>
+      <button class="btn" type="button" onclick="window.print()">Print / Save PDF</button>
+    </div>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="toc" aria-label="Contents">
+    <p class="toc-title">Contents</p>
+    <nav>
+      <a href="#start">1. Start here</a>
+      <a href="#what">2. What you are presenting</a>
+      <a href="#before">3. Before the demo</a>
+      <a href="#demo">4. The 10-minute demo</a>
+      <a href="#labels" class="sub">French labels</a>
+      <a href="#code">5. If someone asks about the code</a>
+      <a href="#database">6. Where the database is</a>
+      <a href="#qa">7. Questions and answers</a>
+      <a href="#trouble">8. If something goes wrong</a>
+      <a href="#cheat">9. One-page cheat sheet</a>
+    </nav>
+    <div class="toc-note">
+      <strong>Tip:</strong> print this page once and keep it next to the laptop. The demo itself takes about 10 minutes.
+    </div>
+  </aside>
+
+  <main id="top">
+
+    <!-- ============================================================ -->
+    <section id="start">
+      <div class="hero">
+        <p class="eyebrow">Presenter’s guide</p>
+        <h1>Presenting <span>SkillBridge Guinea</span></h1>
+        <p class="lead">
+          This guide is for the project owner. It explains what the app does, exactly what to click during the demo,
+          where the data lives, and what to say if someone asks about the code — without needing to read PHP.
+        </p>
+        <div class="hero-meta">
+          <span class="badge">Local demo</span>
+          <span class="badge">About 10 minutes</span>
+          <span class="badge green">98 automated tests</span>
+          <span class="badge amber">Demo data is fictional</span>
+        </div>
+
+        <div class="hero-grid" style="margin-top:1.2rem">
+          <div class="hero-card">
+            <h3>If you remember only three things</h3>
+            <ul>
+              <li>Open <strong>http://localhost:8000</strong> — the app runs on this laptop.</li>
+              <li>Use the three demo accounts: <strong>customer</strong>, <strong>worker</strong>, <strong>admin</strong>.</li>
+              <li>It is a marketplace: customers book tradespeople, workers manage requests, admins moderate.</li>
+            </ul>
+          </div>
+          <div class="hero-card">
+            <h3>The 20-second version</h3>
+            <p class="small" style="margin:0.35rem 0 0">
+              “SkillBridge Guinea connects customers with trusted tradespeople — electricians, plumbers, masons,
+              mechanics, carpenters and painters. Customers search, compare reviews and send a booking request.
+              Professionals manage requests from a dashboard. Admins keep the platform safe.”
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:1rem">
+        <strong>You do not need to explain the code.</strong> If a lecturer asks a technical question, use
+        <a href="#code">section 5</a> and <a href="#database">section 6</a>. The rest of the demo is just clicking
+        through the product.
+      </div>
+
+      <div class="card" style="margin-top:1rem">
+        <h3>How to use this guide</h3>
+        <div class="grid-3">
+          <div>
+            <p class="small"><strong>Before the demo</strong><br>Read sections 1–3. Start the app and prepare the accounts and tabs.</p>
+          </div>
+          <div>
+            <p class="small"><strong>During the demo</strong><br>Follow section 4 step by step. Keep the <a href="#cheat">one-page cheat sheet</a> nearby.</p>
+          </div>
+          <div>
+            <p class="small"><strong>If someone asks about the code</strong><br>Use sections 5–6. You do not need to read any PHP.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="what">
+      <p class="eyebrow">The product</p>
+      <h2>What you are presenting</h2>
+      <p class="lead">
+        SkillBridge Guinea is a local services marketplace for Guinea. It solves a simple problem: finding a
+        trustworthy electrician or plumber is hard, and skilled workers struggle to reach new customers.
+      </p>
+
+      <div class="grid-3" style="margin-top:0.9rem">
+        <div class="card">
+          <span class="badge">For customers</span>
+          <h3 style="margin-top:0.55rem">Find and book</h3>
+          <p class="small muted">Search by trade, city and rating. Compare profiles and reviews. Send a free booking request. Track it from the dashboard.</p>
+        </div>
+        <div class="card">
+          <span class="badge green">For professionals</span>
+          <h3 style="margin-top:0.55rem">Win work</h3>
+          <p class="small muted">Create a profile, show experience and a starting rate, accept or decline requests, and mark jobs as completed.</p>
+        </div>
+        <div class="card">
+          <span class="badge amber">For admins</span>
+          <h3 style="margin-top:0.55rem">Keep it trustworthy</h3>
+          <p class="small muted">Suspend bad accounts, remove inappropriate reviews, and inspect bookings across the platform.</p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:0.9rem">
+        <h3>What it is — and what it is not</h3>
+        <div class="grid-2">
+          <div>
+            <p class="small"><strong>It is:</strong> a working Laravel + MySQL web app, running locally, with real database storage, authentication, roles, bookings, reviews and notifications.</p>
+          </div>
+          <div>
+            <p class="small"><strong>It is not:</strong> a payment platform, a cloud-hosted product, or a production service. There is no online payment by design — customer and professional agree directly.</p>
+          </div>
+        </div>
+        <p class="small muted" style="margin-top:0.5rem">
+          The demo database has 6 trades, 4 professionals, 7 bookings and 2 reviews. The interface is in French;
+          the main screens have an English toggle and a light/dark theme.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Built with</h3>
+        <div class="grid-4" style="margin-top:0.5rem">
+          <div><strong>Laravel 12</strong><br><span class="small muted">PHP framework</span></div>
+          <div><strong>PHP 8.4</strong><br><span class="small muted">Server language</span></div>
+          <div><strong>MySQL 8.4</strong><br><span class="small muted">Database</span></div>
+          <div><strong>Blade</strong><br><span class="small muted">HTML templates</span></div>
+        </div>
+        <div class="grid-4" style="margin-top:0.6rem">
+          <div><strong>Docker + Sail</strong><br><span class="small muted">Runs the app on any laptop</span></div>
+          <div><strong>Plain CSS + JS</strong><br><span class="small muted">No front-end framework</span></div>
+          <div><strong>PHPUnit</strong><br><span class="small muted">98 automated tests</span></div>
+          <div><strong>GitHub Actions</strong><br><span class="small muted">Tests on every change</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="before">
+      <p class="eyebrow">Preparation</p>
+      <h2>Before the demo</h2>
+      <p class="lead">Do this 10 minutes before presenting. Once the app is running, you do not need a terminal during the demo.</p>
+
+      <div class="card">
+        <h3>Pre-demo checklist</h3>
+        <div class="checklist">
+          <label class="check-item"><input type="checkbox" data-persist id="c1"><span>Docker Desktop is open and running.</span></label>
+          <label class="check-item"><input type="checkbox" data-persist id="c2"><span>The app is running at <strong>http://localhost:8000</strong>.</span></label>
+          <label class="check-item"><input type="checkbox" data-persist id="c3"><span>The database has demo data (4 professionals, 7 bookings, 2 reviews).</span></label>
+          <label class="check-item"><input type="checkbox" data-persist id="c4"><span>Four browser tabs are prepared: public, customer, worker, admin.</span></label>
+          <label class="check-item"><input type="checkbox" data-persist id="c5"><span>Browser zoom is 100%, phone is silent, notifications are off.</span></label>
+          <label class="check-item"><input type="checkbox" data-persist id="c6"><span>This guide is open on a phone or second screen.</span></label>
+          <label class="check-item"><input type="checkbox" data-persist id="c7"><span>You have clicked through the demo once.</span></label>
+        </div>
+        <p class="small muted" style="margin-top:0.6rem">The checklist is saved in this browser. Use the reset button if you want a clean slate.</p>
+        <button class="btn" type="button" id="resetChecks">Reset checklist</button>
+      </div>
+
+      <div class="card">
+        <h3>Start the app</h3>
+        <p class="small">Open a terminal in the project root (the folder that contains <code>sample/</code>), then run:</p>
+        <div class="code"><button class="copy" type="button" data-copy="cmd-start">Copy</button><code id="cmd-start"><span class="prompt">$</span> cd sample
+<span class="prompt">$</span> ./vendor/bin/sail up -d
+<span class="prompt">$</span> ./vendor/bin/sail artisan migrate --seed</code></div>
+        <p class="small muted">
+          On Windows, use an Ubuntu/WSL2 terminal and run the same commands from the project folder. Full Windows
+          steps are in <code>docs/windows-setup.md</code>.
+        </p>
+        <p class="small"><strong>First time only:</strong> if dependencies are missing, run <code>composer install</code> and <code>./vendor/bin/sail npm install</code> first.</p>
+      </div>
+
+      <div class="card">
+        <h3>Demo accounts</h3>
+        <p class="small muted">Every account uses the password <strong>password</strong>.</p>
+        <div class="accounts">
+          <div class="account">
+            <h3>Customer</h3>
+            <p>Amadou Bah · Kaloum</p>
+            <span class="cred">amadou@example.test</span>
+            <span class="cred pw">password</span>
+          </div>
+          <div class="account worker">
+            <h3>Professional</h3>
+            <p>Mamadou Diallo · Electrician</p>
+            <span class="cred">mamadou@example.test</span>
+            <span class="cred pw">password</span>
+          </div>
+          <div class="account admin">
+            <h3>Admin</h3>
+            <p>Kader Fofana</p>
+            <span class="cred">admin@skillbridge.test</span>
+            <span class="cred pw">password</span>
+          </div>
+        </div>
+        <p class="small muted" style="margin-top:0.55rem">
+          Optional second customer: <code>fatoumata@example.test</code> / <code>password</code>. Other professionals:
+          <code>ibrahima@example.test</code>, <code>sekou@example.test</code>, <code>kadiatou@example.test</code>.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Prepare four tabs</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Tab</th><th>Where</th><th>Who</th><th>Why</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Normal window</td><td>Public / customer</td><td>Landing, search, profiles, booking</td></tr>
+              <tr><td>2</td><td>Incognito window A</td><td>Customer</td><td>Dashboard, cancel, review</td></tr>
+              <tr><td>3</td><td>Incognito window B</td><td>Professional</td><td>Requests, accept/decline, complete, profile</td></tr>
+              <tr><td>4</td><td>Incognito window C</td><td>Admin</td><td>Users, reviews, bookings</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:0.55rem">
+          Incognito windows keep separate logins, so you can switch roles with one click instead of logging in and out.
+          If you only have one window, log out and log in with the next account (customer → worker → admin).
+        </p>
+      </div>
+
+      <div class="callout warn">
+        <strong>If the page does not open:</strong> make sure Docker Desktop is running, then run
+        <code>./vendor/bin/sail ps</code> and <code>./vendor/bin/sail up -d</code>. See
+        <a href="#trouble">section 8</a>.
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="demo" class="page-break">
+      <p class="eyebrow">The demo</p>
+      <h2>The 10-minute demo</h2>
+      <p class="lead">
+        Follow the steps in order. Each step has what to click, what to say, and what to point at. The app is in
+        French; the English meanings are in the table below.
+      </p>
+
+      <div class="card">
+        <h3>Timing at a glance</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Time</th><th>Step</th><th>What the audience sees</th></tr></thead>
+            <tbody>
+              <tr><td>0:00</td><td>Landing page</td><td>What the platform is</td></tr>
+              <tr><td>1:00</td><td>Search and filters</td><td>Finding a professional</td></tr>
+              <tr><td>2:00</td><td>Worker profile</td><td>Trust: rating, reviews, price</td></tr>
+              <tr><td>3:00</td><td>Customer booking</td><td>End-to-end request</td></tr>
+              <tr><td>5:00</td><td>Customer dashboard</td><td>Tracking and cancellation</td></tr>
+              <tr><td>6:00</td><td>Worker dashboard</td><td>Accept, complete, edit profile</td></tr>
+              <tr><td>8:00</td><td>Notifications</td><td>In-app inbox and email events</td></tr>
+              <tr><td>8:30</td><td>Review</td><td>Ratings and reputation</td></tr>
+              <tr><td>9:30</td><td>Admin</td><td>Moderation and control</td></tr>
+              <tr><td>10:00</td><td>Language and theme</td><td>Bilingual, light/dark</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:0.55rem">
+          <strong>Short on time?</strong> Do steps 1, 2, 3, 4, 6 and 9. Skip the review and password reset.
+        </p>
+      </div>
+
+      <div id="labels" class="card" style="margin-top:0.9rem">
+        <h3>French labels → English meaning</h3>
+        <div class="grid-2">
+          <div class="small">
+            <p><strong>Rechercher</strong> — Search<br>
+            <strong>Tableau de bord</strong> — Dashboard<br>
+            <strong>Se connecter / Se déconnecter</strong> — Log in / Log out<br>
+            <strong>En attente</strong> — Pending<br>
+            <strong>Acceptées</strong> — Accepted<br>
+            <strong>Terminées</strong> — Completed</p>
+          </div>
+          <div class="small">
+            <p><strong>Accepter / Décliner</strong> — Accept / Decline<br>
+            <strong>Marquer comme terminé</strong> — Mark as completed<br>
+            <strong>Annuler la réservation</strong> — Cancel booking<br>
+            <strong>Laisser un avis</strong> — Leave a review<br>
+            <strong>Administration</strong> — Admin panel<br>
+            <strong>Utilisateurs / Avis / Réservations</strong> — Users / Reviews / Bookings</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <div class="step-head"><h3>The landing page</h3><span class="time">1 min</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> open <strong>http://localhost:8000</strong> in the normal browser window.</div>
+            <div class="say"><strong>Say:</strong> “This is SkillBridge Guinea, a local marketplace for tradespeople. Customers can search, compare profiles and reviews, and send a free booking request. Professionals manage those requests from a dashboard, and admins moderate the platform.”</div>
+            <p><strong>Point at:</strong> the headline, the three stats (4 professionals, 3 cities, 5.0 average rating), “Comment ça marche ?” (the three steps), the six trade cards, and the featured professional card.</p>
+            <p class="screenshot-note">The interface is French. Use the label table above if you need to translate.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 2 -->
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <div class="step-head"><h3>Search and filters</h3><span class="time">1 min</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> click <strong>Rechercher</strong> (or go to <strong>/search</strong>). Set <strong>Métier</strong> to <strong>Électricien</strong>, <strong>Localisation</strong> to <strong>Kaloum</strong>, and <strong>Note minimale</strong> to <strong>4★ et plus</strong>. Click <strong>Appliquer les filtres</strong>.</div>
+            <div class="say"><strong>Say:</strong> “Search runs against the MySQL database. The filters combine, and the list updates to show only professionals who match. Each card shows the rating, availability and starting price.”</div>
+            <p><strong>Point at:</strong> the result count, “Triés par : meilleure note”, the “Vérifié” and “Disponible” badges, and the starting price.</p>
+            <div class="do"><strong>Reset:</strong> click <strong>Réinitialiser</strong> so the next step starts from all professionals.</div>
+            <div class="note"><strong>About pagination:</strong> results paginate at six per page. The demo has four professionals, so pagination does not appear here. If asked, say it is built in for larger datasets.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 3 -->
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <div class="step-head"><h3>The professional profile</h3><span class="time">1 min</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> click <strong>Voir le profil</strong> on <strong>Mamadou Diallo</strong> (electrician, Kaloum) — or <strong>Voir son profil</strong> on the featured card on the home page.</div>
+            <div class="say"><strong>Say:</strong> “This is the public profile: trade, experience, service area, starting rate, rating, reviews and completed jobs. The badges show that the profile is verified and currently available.”</div>
+            <p><strong>Point at:</strong> the rating and reviews, the “À partir de … GNF” price, “Réserver ce travailleur”, and “Aucun paiement en ligne”.</p>
+            <p class="small muted">In this demo the seeded professionals are pre-verified; admin-side verification is a future feature.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 4 -->
+      <div class="step">
+        <div class="step-num">4</div>
+        <div>
+          <div class="step-head"><h3>Customer sends a booking</h3><span class="time">2 min</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> switch to the <strong>customer</strong> tab (Amadou). If you are not logged in, use <strong>Se connecter</strong> with <code>amadou@example.test</code> / <code>password</code>. Open a professional profile and click <strong>Réserver ce travailleur</strong>.</div>
+            <p><strong>Fill the form:</strong></p>
+            <ul>
+              <li><strong>Description du travail:</strong> “Réparer une prise dans la cuisine.”</li>
+              <li><strong>Date souhaitée:</strong> tomorrow (any future date).</li>
+              <li><strong>Créneau:</strong> Matin.</li>
+              <li><strong>Quartier / adresse:</strong> “Kaloum, rue KA-020”.</li>
+              <li><strong>Votre numéro de contact:</strong> already filled.</li>
+            </ul>
+            <div class="do"><strong>Do:</strong> click <strong>Envoyer la demande</strong>.</div>
+            <div class="say"><strong>Say:</strong> “That writes a booking row to the database and sends a notification to the professional. No payment is taken — the customer and the professional agree directly.”</div>
+            <p><strong>Point at:</strong> the success page “Demande envoyée !” and the button <strong>Voir mes réservations</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 5 -->
+      <div class="step">
+        <div class="step-num">5</div>
+        <div>
+          <div class="step-head"><h3>Customer dashboard and cancellation</h3><span class="time">1 min</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> open <strong>Tableau de bord</strong> in the customer tab. Show <strong>Vos réservations</strong>.</div>
+            <div class="say"><strong>Say:</strong> “Customers can track every request, see its status, cancel while it is still pending or accepted, and review a completed job.”</div>
+            <p><strong>Point at:</strong> the status badges, the <strong>Annuler la réservation</strong> button on an active booking, and <strong>Laisser un avis</strong> on a completed booking.</p>
+            <div class="do"><strong>Optional:</strong> click <strong>Annuler la réservation</strong> on a pending booking, confirm, and show the status change to <strong>Annulée</strong>.</div>
+            <div class="warn"><strong>Careful:</strong> only cancel a booking you do not need later. The worker still has another pending request for the next step.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 6 -->
+      <div class="step">
+        <div class="step-num">6</div>
+        <div>
+          <div class="step-head"><h3>Worker dashboard</h3><span class="time">2 min</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> switch to the <strong>worker</strong> tab (Mamadou) and open <strong>Tableau de bord</strong>.</div>
+            <div class="say"><strong>Say:</strong> “Workers see their requests grouped by status. They can accept, decline, or mark an accepted job as completed. The app enforces that a worker can only act on their own bookings.”</div>
+            <p><strong>Point at:</strong> the three tabs <strong>En attente</strong>, <strong>Acceptées</strong>, <strong>Terminées</strong>; the customer name, address and phone; and <strong>Appeler le client</strong>.</p>
+            <div class="do"><strong>Do:</strong> click <strong>Accepter</strong> on a pending request. Show it move to <strong>Acceptées</strong>. Then click <strong>Marquer comme terminé</strong> on an accepted job and show it in <strong>Terminées</strong>.</div>
+            <div class="do"><strong>Do:</strong> click <strong>Modifier mon profil</strong>. Show the editable fields and the availability switch, then click <strong>Enregistrer les modifications</strong>.</div>
+            <div class="say"><strong>Say:</strong> “Workers maintain their own profile and availability. If they switch availability off, they disappear from search immediately.”</div>
+            <div class="warn"><strong>Careful:</strong> if you switch availability off, turn it back on before showing search again.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 7 -->
+      <div class="step">
+        <div class="step-num">7</div>
+        <div>
+          <div class="step-head"><h3>Notifications</h3><span class="time">30 sec</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> click the <strong>bell</strong> in the header (worker tab). Show the inbox. Click one notification and then <strong>Tout marquer comme lu</strong>.</div>
+            <div class="say"><strong>Say:</strong> “Every important event — a new request, an acceptance, a cancellation, a review — creates a notification in the database and an email. The bell shows the unread count.”</div>
+            <p><strong>Point at:</strong> the different notification types and the unread badge.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 8 -->
+      <div class="step">
+        <div class="step-num">8</div>
+        <div>
+          <div class="step-head"><h3>Leave a review</h3><span class="time">1 min</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> switch to the <strong>customer</strong> tab. On the dashboard, find a completed booking and click <strong>Laisser un avis</strong>. Choose 5 stars, add “Travail rapide et soigné.”, and submit.</div>
+            <div class="say"><strong>Say:</strong> “Only the customer can review, only after completion, and only once per booking. The rating updates the professional’s public profile.”</div>
+            <p><strong>Point at:</strong> the review on the customer dashboard and then on the worker’s public profile.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 9 -->
+      <div class="step">
+        <div class="step-num">9</div>
+        <div>
+          <div class="step-head"><h3>Admin panel</h3><span class="time">1 min</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> switch to the <strong>admin</strong> tab (<code>admin@skillbridge.test</code>). Open <strong>Administration</strong>.</div>
+            <div class="say"><strong>Say:</strong> “Admins can see the platform at a glance, suspend or reactivate accounts, remove inappropriate reviews, and inspect bookings. Suspended users are blocked at login and logged out of active sessions.”</div>
+            <p><strong>Point at:</strong> the stats, the tabs <strong>Utilisateurs</strong>, <strong>Avis</strong>, <strong>Réservations</strong>, and the <strong>Suspendre</strong> / <strong>Réactiver</strong> actions.</p>
+            <div class="warn"><strong>Do not</strong> suspend the admin, Amadou or Mamadou during the demo — you still need them. If you want to show the action, suspend a different user and reactivate them immediately.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEP 10 -->
+      <div class="step">
+        <div class="step-num">10</div>
+        <div>
+          <div class="step-head"><h3>Language and theme</h3><span class="time">30 sec</span></div>
+          <div class="step-body">
+            <div class="do"><strong>Do:</strong> click <strong>EN</strong> in the header, then the moon/sun button. Switch back to <strong>FR</strong> and light mode.</div>
+            <div class="say"><strong>Say:</strong> “The header has a French/English toggle and a light/dark theme. The core customer, worker and admin screens switch to English; the newest screens are still French while server-side translation is finished.”</div>
+            <div class="note">Be honest if asked: the English toggle covers the main screens. A few newer screens and server-side validation messages are still French. That is documented as future work.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:0.9rem">
+        <h3>Optional: password reset</h3>
+        <p class="small">Only if you have 30 seconds and want to show account recovery.</p>
+        <div class="do"><strong>Do:</strong> log out, click <strong>Mot de passe oublié ?</strong>, enter <code>amadou@example.test</code>, and submit.</div>
+        <div class="say"><strong>Say:</strong> “The app sends a reset link. In local development, email is written to a log file instead of being sent.”</div>
+        <div class="note">Do not open the log file during the demo unless a lecturer specifically asks. The path is <code>storage/logs/laravel.log</code>.</div>
+      </div>
+
+      <div class="callout" style="margin-top:0.9rem">
+        <strong>After the demo:</strong> if you want the original demo data back, run
+        <code>./vendor/bin/sail artisan migrate:fresh --seed</code>. This deletes the bookings/reviews you created
+        and restores the seeded data.
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="code">
+      <p class="eyebrow">If someone asks</p>
+      <h2>What to say about the code</h2>
+      <p class="lead">
+        You do not need to read code during the demo. Use the plain-English answers below. The app is a standard
+        Laravel application: a URL goes to a route, the route calls a controller, the controller uses a model to
+        read or write MySQL, and a Blade view renders the HTML.
+      </p>
+
+      <div class="card">
+        <h3>The request flow, in one picture</h3>
+        <div class="flow" aria-label="Request flow">
+          <div class="flow-node"><strong>Browser</strong><span>you click a link or submit a form</span></div>
+          <div class="flow-node"><strong>Route</strong><span><code>routes/web.php</code> maps the URL</span></div>
+          <div class="flow-node"><strong>Controller</strong><span>validates and decides what to do</span></div>
+          <div class="flow-node"><strong>Model</strong><span>reads/writes the MySQL tables</span></div>
+          <div class="flow-node"><strong>Blade view</strong><span>turns data into HTML</span></div>
+        </div>
+        <p class="small muted">Example: opening <code>/search</code> calls <code>SearchController</code>, which queries the <code>users</code>, <code>worker_profiles</code> and <code>reviews</code> tables, then renders <code>resources/views/search.blade.php</code>.</p>
+      </div>
+
+      <div class="card">
+        <h3>Where everything lives</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>If they ask…</th><th>Open this</th><th>In plain English</th></tr></thead>
+            <tbody>
+              <tr><td>Where are the URLs?</td><td><code>routes/web.php</code></td><td>The map of every page and action.</td></tr>
+              <tr><td>Where is the page logic?</td><td><code>app/Http/Controllers/</code></td><td>One class per area: booking, search, admin, auth, notifications.</td></tr>
+              <tr><td>Where are the database tables?</td><td><code>app/Models/</code></td><td>Each model represents one table: User, WorkerProfile, Booking, Review, Trade.</td></tr>
+              <tr><td>Where is the HTML?</td><td><code>resources/views/</code></td><td>Blade templates for every page, layout and component.</td></tr>
+              <tr><td>Where is the table structure?</td><td><code>database/migrations/</code></td><td>The recipe that creates the MySQL tables.</td></tr>
+              <tr><td>Where is the demo data?</td><td><code>database/seeders/</code></td><td>Trades and demo accounts/bookings/reviews.</td></tr>
+              <tr><td>Where is the design?</td><td><code>public/assets/css/style.css</code> + <code>resources/views/</code></td><td>The shared look and the page markup.</td></tr>
+              <tr><td>Where are the tests?</td><td><code>tests/Feature/</code> and <code>tests/Unit/</code></td><td>98 automated checks covering the flows.</td></tr>
+              <tr><td>Where is the plan?</td><td><code>docs/backend-plan.md</code></td><td>The original design decisions and milestones.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:0.9rem">
+        <div class="card">
+          <h3>“How does a booking work?”</h3>
+          <p class="small">
+            The customer submits the form → <code>StoreBookingRequest</code> validates it → <code>BookingController</code>
+            creates a <code>Booking</code> row with status <strong>pending</strong> → the worker gets a notification →
+            the worker accepts/declines → the status changes → the customer can review after completion.
+          </p>
+        </div>
+        <div class="card">
+          <h3>“How do you stop abuse?”</h3>
+          <p class="small">
+            Passwords are hashed, forms use CSRF tokens, login and password reset are rate-limited, routes use
+            <code>auth</code> and <code>role</code> middleware, and policies check ownership before a booking can be
+            accepted, completed, cancelled or reviewed. Suspended users are blocked and logged out.
+          </p>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:0.9rem">
+        <strong>Best sentence if you get stuck:</strong> “The app is built with Laravel and MySQL. The code is
+        organised into routes, controllers, models and Blade views, and the flows are covered by automated tests.”
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="database">
+      <p class="eyebrow">The data</p>
+      <h2>Where the database is</h2>
+      <p class="lead">
+        The short answer: the data lives in a <strong>MySQL 8 database running inside Docker</strong>. It is not a
+        file on the Desktop. The app connects to it using the settings in <code>.env</code>.
+      </p>
+
+      <div class="card">
+        <h3>Connection settings</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Setting</th><th>Value</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td>Database type</td><td><code>MySQL 8.4</code></td><td>Same as the original project design.</td></tr>
+              <tr><td>Host (inside Docker)</td><td><code>mysql</code></td><td>The name of the MySQL container.</td></tr>
+              <tr><td>Port</td><td><code>3306</code></td><td>Also exposed to the laptop on <code>127.0.0.1:3306</code>.</td></tr>
+              <tr><td>Database name</td><td><code>skillbridge</code></td><td>Where all app tables live.</td></tr>
+              <tr><td>Username</td><td><code>sail</code></td><td>Development user.</td></tr>
+              <tr><td>Password</td><td><code>password</code></td><td>Development password (not a production secret).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="small muted" style="margin-top:0.55rem">These values come from <code>sample/.env</code>. Do not change them during the demo.</p>
+      </div>
+
+      <div class="card">
+        <h3>Show the data from a terminal</h3>
+        <p class="small">From the <code>sample/</code> folder:</p>
+        <div class="code"><button class="copy" type="button" data-copy="cmd-db">Copy</button><code id="cmd-db"><span class="prompt">$</span> ./vendor/bin/sail mysql
+<span class="comment"># inside MySQL:</span>
+SHOW DATABASES;
+USE skillbridge;
+SHOW TABLES;
+SELECT id, name, email, role FROM users;
+SELECT id, status, description FROM bookings;
+exit;</code></div>
+        <p class="small muted">This opens the MySQL client inside the Docker container. Type <code>exit</code> to leave.</p>
+      </div>
+
+      <div class="card">
+        <h3>Show the data without SQL</h3>
+        <p class="small">
+          The easiest option is the app itself: log in as admin and open <strong>Administration</strong>. The
+          <strong>Utilisateurs</strong>, <strong>Avis</strong> and <strong>Réservations</strong> tabs show the same
+          data in a human-friendly way. Use this in the demo; use SQL only if a lecturer asks to see the raw tables.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>What is in each table</h3>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Table</th><th>What it stores</th></tr></thead>
+            <tbody>
+              <tr><td><code>users</code></td><td>Every account: customers, professionals and the admin. Passwords are hashed, never stored as plain text.</td></tr>
+              <tr><td><code>trades</code></td><td>The six categories: electrician, plumber, mason, mechanic, carpenter, painter.</td></tr>
+              <tr><td><code>worker_profiles</code></td><td>A professional’s bio, experience, service area, starting rate, availability and verification.</td></tr>
+              <tr><td><code>bookings</code></td><td>Customer requests: who, which professional, description, date, address, status.</td></tr>
+              <tr><td><code>reviews</code></td><td>One rating and comment per completed booking.</td></tr>
+              <tr><td><code>notifications</code></td><td>The in-app inbox: new request, accepted, declined, completed, cancelled, new review.</td></tr>
+              <tr><td><code>sessions</code>, <code>cache</code>, <code>jobs</code></td><td>Laravel plumbing for logins, caching and background jobs. Ignore during the demo.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Where is the data physically?</h3>
+        <p class="small">
+          It is stored in a <strong>Docker volume</strong> attached to the MySQL container. The volume is created by
+          Docker Compose and normally named after the project plus <code>sail-mysql</code>. It survives restarts of
+          the app; it is removed only if you delete the volume or run a reset command.
+        </p>
+        <p class="small"><strong>You do not need to open the volume.</strong> Use the MySQL client or the admin panel.</p>
+      </div>
+
+      <div class="card">
+        <h3>Reset the demo data</h3>
+        <p class="small">If a demo changes too much data, restore the original seed:</p>
+        <div class="code"><button class="copy" type="button" data-copy="cmd-reset">Copy</button><code id="cmd-reset"><span class="prompt">$</span> ./vendor/bin/sail artisan migrate:fresh --seed</code></div>
+        <div class="warn"><strong>Warning:</strong> <code>migrate:fresh</code> deletes every table and re-creates it. Never run it in the middle of a presentation unless you intend to wipe the demo data.</div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="qa">
+      <p class="eyebrow">Questions</p>
+      <h2>Questions and answers</h2>
+      <p class="lead">Short answers for the questions a lecturer or friend is most likely to ask.</p>
+
+      <details class="qa">
+        <summary>Is it secure?</summary>
+        <div class="answer">
+          Passwords are hashed, forms are protected against CSRF, login and password reset are rate-limited, routes
+          require authentication and the right role, and policies check ownership before a booking can be accepted,
+          completed, cancelled or reviewed. Suspended accounts are blocked at login and logged out of active sessions.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Does it handle payments?</summary>
+        <div class="answer">
+          No, by design. SkillBridge connects people; the customer pays the professional directly after the job.
+          This avoids handling money and card data in a student project.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Is it mobile-friendly?</summary>
+        <div class="answer">
+          Yes. The layout is responsive: navigation collapses, cards stack, and tables become labelled cards on
+          small screens. You can show this by narrowing the browser window during the demo.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Does it support English?</summary>
+        <div class="answer">
+          The interface has a French/English toggle and a light/dark theme. The main customer, worker and admin
+          screens switch to English; a few newer screens (such as profile editing) and server-side validation
+          messages are still French. Full server-side translation is documented as future work.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>What if two customers book the same professional?</summary>
+        <div class="answer">
+          Both requests are stored. The professional chooses which one to accept or decline. There is no live calendar
+          or automatic slot locking in this version; that is a reasonable next feature.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>How many users can it handle?</summary>
+        <div class="answer">
+          It is a local FYP demo, not load-tested. The stack (Laravel + MySQL) can scale, but no production capacity
+          claims should be made. The honest answer is: “It has not been load-tested; this is a local demonstration.”
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Is it deployed online?</summary>
+        <div class="answer">
+          No. It runs locally in Docker for the FYP demo. The static design prototype was shared earlier via
+          Cloudflare R2, but the Laravel app itself is not hosted.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>How do you know it works?</summary>
+        <div class="answer">
+          There are 98 automated feature tests covering registration, login, roles, search, booking, cancellation,
+          reviews, admin actions, profile editing, password reset and notifications. The test suite runs on SQLite
+          locally and MySQL 8.4 in GitHub Actions.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>Why Laravel and MySQL?</summary>
+        <div class="answer">
+          Laravel gives us authentication, validation, security defaults, database migrations and testing in one
+          framework. MySQL matches the relational design from FYP1. Blade keeps the front end simple — no separate
+          JavaScript app to maintain — and Docker/Sail makes it run the same way on Linux and Windows.
+        </div>
+      </details>
+
+      <details class="qa">
+        <summary>What is missing or next?</summary>
+        <div class="answer">
+          Admin verification of professionals, reporting/hiding reviews, SMS notifications, queued email, full
+          server-side translation, and production hosting. None of these block the local demo.
+        </div>
+      </details>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="trouble">
+      <p class="eyebrow">Recovery</p>
+      <h2>If something goes wrong</h2>
+      <p class="lead">Most problems are caused by Docker not running or the app not being started. Work through this table.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Symptom</th><th>What to do</th></tr></thead>
+          <tbody>
+            <tr><td><code>localhost:8000</code> does not open</td><td>Start Docker Desktop. In <code>sample/</code>, run <code>./vendor/bin/sail up -d</code>, then <code>./vendor/bin/sail ps</code>.</td></tr>
+            <tr><td>“500” error page</td><td>Run <code>./vendor/bin/sail logs</code> and check <code>sample/storage/logs/laravel.log</code>. Often the database is not running.</td></tr>
+            <tr><td>Database connection error</td><td>Run <code>./vendor/bin/sail ps</code>. If MySQL is not up, run <code>./vendor/bin/sail up -d</code>. Confirm <code>DB_HOST=mysql</code> in <code>.env</code>.</td></tr>
+            <tr><td>Login fails</td><td>Use the exact demo email and password <code>password</code>. Clear cookies or use a fresh incognito window.</td></tr>
+            <tr><td>“Too many attempts”</td><td>Wait one minute, or run <code>./vendor/bin/sail artisan cache:clear</code>.</td></tr>
+            <tr><td>Data is missing or changed</td><td>Restore the seed with <code>./vendor/bin/sail artisan migrate:fresh --seed</code> (this wipes data).</td></tr>
+            <tr><td>Page looks unstyled</td><td>Hard refresh: <code>Ctrl</code> + <code>F5</code> (Windows) or <code>Cmd</code> + <code>Shift</code> + <code>R</code> (Mac).</td></tr>
+            <tr><td>Port 8000 is busy</td><td>Run <code>./vendor/bin/sail down</code>, then <code>./vendor/bin/sail up -d</code>. Or change <code>APP_PORT</code> in <code>.env</code> and restart.</td></tr>
+            <tr><td>“Page expired” / CSRF</td><td>Refresh the page and submit the form again. Do not leave forms open for a long time.</td></tr>
+            <tr><td>Everything is broken</td><td>Run <code>./vendor/bin/sail down</code>, then <code>./vendor/bin/sail up -d</code>, then reseed if needed.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid-2" style="margin-top:0.9rem">
+        <div class="card">
+          <h3>Useful commands (from the project root)</h3>
+          <div class="code"><button class="copy" type="button" data-copy="cmd-debug">Copy</button><code id="cmd-debug"><span class="prompt">$</span> cd sample
+<span class="prompt">$</span> ./vendor/bin/sail ps
+<span class="prompt">$</span> ./vendor/bin/sail logs
+<span class="prompt">$</span> ./vendor/bin/sail artisan cache:clear
+<span class="prompt">$</span> ./vendor/bin/sail artisan migrate:fresh --seed</code></div>
+        </div>
+        <div class="card">
+          <h3>Do not do during the demo</h3>
+          <ul class="small">
+            <li>Do not run <code>migrate:fresh</code> while presenting.</li>
+            <li>Do not suspend the admin, Amadou or Mamadou.</li>
+            <li>Do not delete the seeded 5★ reviews if you want to show ratings.</li>
+            <li>Do not edit <code>.env</code> or close the terminal running Sail.</li>
+            <li>Do not use the browser Back button after submitting a form; use the app’s links.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section id="cheat" class="page-break">
+      <p class="eyebrow">Print this</p>
+      <h2>One-page cheat sheet</h2>
+
+      <div class="cheat">
+        <div class="cheat-grid">
+          <div>
+            <h3>Open</h3>
+            <p class="small"><strong>http://localhost:8000</strong></p>
+            <h3 style="margin-top:0.8rem">Accounts · password <code>password</code></h3>
+            <ul>
+              <li>Customer: <code>amadou@example.test</code></li>
+              <li>Worker: <code>mamadou@example.test</code></li>
+              <li>Admin: <code>admin@skillbridge.test</code></li>
+            </ul>
+            <h3 style="margin-top:0.8rem">The 6-step flow</h3>
+            <ol>
+              <li>Landing page</li>
+              <li>Search + filters</li>
+              <li>Professional profile</li>
+              <li>Customer sends a booking</li>
+              <li>Worker accepts/completes</li>
+              <li>Admin moderates</li>
+            </ol>
+          </div>
+          <div>
+            <h3>What to say first</h3>
+            <p class="small">“SkillBridge Guinea connects customers with trusted tradespeople. Customers search and book; professionals manage requests; admins moderate.”</p>
+            <h3 style="margin-top:0.8rem">If asked about the code</h3>
+            <p class="small">“Laravel + MySQL. Routes → controllers → models → Blade views. The flows are covered by 98 automated tests.”</p>
+            <h3 style="margin-top:0.8rem">If asked where the data is</h3>
+            <p class="small">“MySQL 8 in Docker, database <code>skillbridge</code>. The admin panel shows the same data without SQL.”</p>
+            <h3 style="margin-top:0.8rem">If something breaks</h3>
+            <p class="small">Docker running? <code>sail up -d</code>. Then <code>sail ps</code>. Then <code>sail logs</code>.</p>
+          </div>
+        </div>
+        <hr style="border:0;border-top:1px solid var(--line);margin:1rem 0">
+        <p class="small muted" style="margin:0">
+          Local FYP demo · fictional data · no online payments · not deployed.
+          Full setup: <code>README.md</code>. Full technical plan: <code>docs/backend-plan.md</code>.
+        </p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  SkillBridge Guinea — presenter’s guide. This page is a static HTML file: it works offline and does not touch the
+  database. The app itself runs at <strong>http://localhost:8000</strong>.
+</footer>
+
+<script>
+  (function () {
+    "use strict";
+
+    // Persist checklist state in this browser.
+    var boxes = Array.prototype.slice.call(document.querySelectorAll('input[type="checkbox"][data-persist]'));
+    boxes.forEach(function (box) {
+      try {
+        box.checked = window.localStorage.getItem('sb-guide-' + box.id) === '1';
+      } catch (error) { /* localStorage may be unavailable */ }
+
+      box.addEventListener('change', function () {
+        try {
+          window.localStorage.setItem('sb-guide-' + box.id, box.checked ? '1' : '0');
+        } catch (error) { /* ignore */ }
+      });
+    });
+
+    var reset = document.getElementById('resetChecks');
+    if (reset) {
+      reset.addEventListener('click', function () {
+        boxes.forEach(function (box) {
+          box.checked = false;
+          try { window.localStorage.removeItem('sb-guide-' + box.id); } catch (error) { /* ignore */ }
+        });
+      });
+    }
+
+    // Copy buttons, with a fallback for older browsers / file:// pages.
+    document.querySelectorAll('[data-copy]').forEach(function (button) {
+      button.addEventListener('click', function () {
+        var target = document.getElementById(button.getAttribute('data-copy'));
+        if (!target) return;
+        var text = target.innerText;
+
+        function done() {
+          var old = button.textContent;
+          button.textContent = 'Copied';
+          window.setTimeout(function () { button.textContent = old; }, 1200);
+        }
+
+        if (navigator.clipboard && window.isSecureContext) {
+          navigator.clipboard.writeText(text).then(done).catch(fallback);
+        } else {
+          fallback();
+        }
+
+        function fallback() {
+          var area = document.createElement('textarea');
+          area.value = text;
+          area.setAttribute('readonly', '');
+          area.style.position = 'fixed';
+          area.style.opacity = '0';
+          document.body.appendChild(area);
+          area.select();
+          try { document.execCommand('copy'); done(); } catch (error) { /* ignore */ }
+          document.body.removeChild(area);
+        }
+      });
+    });
+
+    // Highlight the current section in the table of contents.
+    var links = Array.prototype.slice.call(document.querySelectorAll('.toc nav a'));
+    var sections = links.map(function (link) {
+      return document.querySelector(link.getAttribute('href'));
+    }).filter(Boolean);
+
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          links.forEach(function (link) {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + entry.target.id);
+          });
+        });
+      }, { rootMargin: '-15% 0px -70% 0px', threshold: 0 });
+
+      sections.forEach(function (section) { observer.observe(section); });
+    }
+
+    // Open every Q&A block when printing, then restore the previous state.
+    var qas = Array.prototype.slice.call(document.querySelectorAll('details.qa'));
+    window.addEventListener('beforeprint', function () {
+      qas.forEach(function (qa) {
+        qa.dataset.wasOpen = qa.open ? '1' : '0';
+        qa.open = true;
+      });
+    });
+    window.addEventListener('afterprint', function () {
+      qas.forEach(function (qa) {
+        if (qa.dataset.wasOpen === '0') qa.open = false;
+      });
+    });
+  })();
+</script>
+</body>
+</html>
