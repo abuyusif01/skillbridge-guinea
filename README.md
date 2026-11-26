@@ -110,6 +110,12 @@ Run tests inside Sail:
 ./vendor/bin/sail test
 ```
 
+## Presenter guide
+
+For the FYP demo, open [`public/presenter-guide.html`](public/presenter-guide.html) directly, or start the app
+and open <http://localhost:8000/presenter-guide.html>. It contains the demo script, demo accounts, a plain-English
+explanation of the stack and code layout, where the MySQL database lives, and troubleshooting steps.
+
 ## Windows
 
 The end user runs the app locally on Windows. Two supported paths:
