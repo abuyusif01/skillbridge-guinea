@@ -110,6 +110,70 @@ class DemoDataSeeder extends Seeder
             ]
         );
 
+        $mamadouCompleted = Booking::firstOrCreate(
+            [
+                'customer_id' => $fatoumata->id,
+                'worker_id' => $mamadou->id,
+                'description' => 'Réparation du tableau électrique et remplacement de deux disjoncteurs.',
+            ],
+            [
+                'trade_id' => $electrician->id,
+                'preferred_date' => now()->subDays(8)->toDateString(),
+                'time_slot' => 'morning',
+                'address' => 'Matoto, quartier Dabompa',
+                'contact_phone' => $fatoumata->phone,
+                'status' => BookingStatus::Completed,
+                'responded_at' => now()->subDays(9),
+                'completed_at' => now()->subDays(8),
+            ]
+        );
+
+        Review::updateOrCreate(
+            ['booking_id' => $mamadouCompleted->id],
+            [
+                'customer_id' => $fatoumata->id,
+                'worker_id' => $mamadou->id,
+                'rating' => 5,
+                'comment' => 'Professionnel et ponctuel. Je recommande.',
+                'status' => ReviewStatus::Published,
+            ]
+        );
+
+        Booking::firstOrCreate(
+            [
+                'customer_id' => $amadou->id,
+                'worker_id' => $mamadou->id,
+                'description' => 'Installation d’un ventilateur de plafond dans la chambre.',
+            ],
+            [
+                'trade_id' => $electrician->id,
+                'preferred_date' => now()->addDays(1)->toDateString(),
+                'time_slot' => 'evening',
+                'address' => 'Kaloum, rue KA-020',
+                'contact_phone' => $amadou->phone,
+                'status' => BookingStatus::Accepted,
+                'responded_at' => now(),
+            ]
+        );
+
+        Booking::firstOrCreate(
+            [
+                'customer_id' => $amadou->id,
+                'worker_id' => $mamadou->id,
+                'description' => 'Installation de deux prises et d’un interrupteur dans la cuisine.',
+            ],
+            [
+                'trade_id' => $electrician->id,
+                'preferred_date' => now()->subDays(2)->toDateString(),
+                'time_slot' => 'afternoon',
+                'address' => 'Kaloum, rue KA-020',
+                'contact_phone' => $amadou->phone,
+                'status' => BookingStatus::Completed,
+                'responded_at' => now()->subDays(3),
+                'completed_at' => now()->subDays(2),
+            ]
+        );
+
     }
 
     private function user(string $name, string $email, string $phone, UserRole $role, string $city): User

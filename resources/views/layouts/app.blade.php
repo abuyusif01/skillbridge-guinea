@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
   @stack('head')
 </head>
-<body class="@yield('body_class')">
+<body class="@yield('body_class', 'no-bottom-nav')">
   <a class="skip-link" href="#main">Aller au contenu</a>
 
   <header class="site-header">
@@ -26,9 +26,13 @@
 
       <nav class="site-nav" id="site-nav" aria-label="Navigation principale">
         <a href="{{ route('home') }}" class="{{ request()->routeIs('home') ? 'active' : '' }}" @if (request()->routeIs('home')) aria-current="page" @endif>Accueil</a>
+        <a href="{{ route('search') }}" class="{{ request()->routeIs('search', 'workers.*') ? 'active' : '' }}" @if (request()->routeIs('search', 'workers.*')) aria-current="page" @endif>Rechercher</a>
 
         @auth
           <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'active' : '' }}" @if (request()->routeIs('dashboard')) aria-current="page" @endif>Tableau de bord</a>
+          @if (auth()->user()->isAdmin())
+            <a class="nav-admin {{ request()->routeIs('admin.*') ? 'active' : '' }}" href="{{ route('admin.dashboard') }}" @if (request()->routeIs('admin.*')) aria-current="page" @endif>Administration</a>
+          @endif
           <form class="inline-form" method="POST" action="{{ route('logout') }}">
             @csrf
             <button class="btn btn-outline btn-sm" type="submit">Se déconnecter</button>
@@ -79,8 +83,12 @@
       </div>
       <nav class="footer-links" aria-label="Liens de pied de page">
         <a href="{{ route('home') }}">Accueil</a>
+        <a href="{{ route('search') }}">Rechercher</a>
         @auth
           <a href="{{ route('dashboard') }}">Tableau de bord</a>
+          @if (auth()->user()->isAdmin())
+            <a href="{{ route('admin.dashboard') }}">Administration</a>
+          @endif
         @else
           <a href="{{ route('login') }}">Connexion</a>
           <a href="{{ route('register') }}">S'inscrire</a>
