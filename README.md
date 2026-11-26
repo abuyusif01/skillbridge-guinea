@@ -71,17 +71,33 @@ Demo users are skipped when `APP_ENV=production`.
 ## What works now
 
 - Public landing page with DB-backed trades, stats and a featured professional
-- Search by trade, city and minimum rating; public worker profiles with reviews
+- Search by trade, city and minimum rating, with paginated results that keep
+  the active filters; public worker profiles with reviews
 - Customer booking form, confirmation and dashboard
 - Worker dashboard: accept, decline and complete requests
 - Customer review form, one review per completed booking
 - Admin dashboard: suspend/reactivate users, delete reviews, inspect bookings
 - Registration for customers and professionals; login by e-mail or phone
+- Password reset by e-mail link (written to the local log, see below)
+- In-app notification centre with unread badge: new booking requests, accept,
+  decline, completion and new reviews; mark one or all as read
 - Suspended accounts blocked at login and on active sessions
 - Role middleware (`role:admin`) and policies for booking/review actions
 - FR/EN and light/dark controls on every Blade page
 
-Notifications, password reset and production deployment are next.
+Production deployment, SMS delivery and queued mail are next.
+
+### Notifications and password reset in local development
+
+Booking events create a database notification (shown in the header bell and
+`/notifications`) and send an e-mail. Password-reset links are also sent by
+e-mail. The default `.env` uses `MAIL_MAILER=log`, so every message is written
+to `storage/logs/laravel.log` instead of leaving the machine — open that file
+to copy a reset link during a demo.
+
+Notifications are sent synchronously so the demo works without a queue
+worker. Before production, move the notification classes to `ShouldQueue` and
+run `php artisan queue:work`.
 
 Run tests inside Sail:
 

@@ -55,7 +55,7 @@
 
           <div class="auth-meta">
             <label class="check"><input type="checkbox" name="remember" value="1" @checked(old('remember'))> Se souvenir de moi</label>
-            <a href="#" data-demo="Lien de réinitialisation envoyé (démonstration)">Mot de passe oublié ?</a>
+            <a href="{{ route('password.request') }}">Mot de passe oublié ?</a>
           </div>
 
           <button class="btn btn-primary btn-lg btn-block" type="submit">Se connecter</button>

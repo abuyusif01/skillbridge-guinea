@@ -66,11 +66,66 @@ class SearchTest extends TestCase
             ->assertDontSee($worker->name);
     }
 
-    private function worker(string $tradeSlug, string $city, array $profileOverrides = []): User
+    public function test_search_results_are_paginated(): void
+    {
+        foreach (range(1, 7) as $index) {
+            $this->worker('electrician', 'Kaloum', [], sprintf('Worker %02d', $index));
+        }
+
+        $this->get('/search')
+            ->assertOk()
+            ->assertSee('Page 1 sur 2')
+            ->assertSee('Worker 01')
+            ->assertDontSee('Worker 07');
+
+        $this->get('/search?page=2')
+            ->assertOk()
+            ->assertSee('Page 2 sur 2')
+            ->assertSee('Worker 07')
+            ->assertDontSee('Worker 01');
+    }
+
+    public function test_rating_filter_is_applied_to_the_pagination_count(): void
+    {
+        foreach (range(1, 7) as $index) {
+            $this->review($this->worker('electrician', 'Kaloum', [], "Top {$index}"), 5);
+        }
+
+        $lowRated = $this->worker('plumber', 'Matoto', [], 'Low Rated');
+        $this->review($lowRated, 2);
+
+        $this->get('/search?min_rating=4')
+            ->assertOk()
+            ->assertSee('7 professionnels')
+            ->assertSee('Page 1 sur 2')
+            ->assertDontSee('Low Rated');
+    }
+
+    public function test_pagination_links_keep_the_active_filters(): void
+    {
+        foreach (range(1, 7) as $index) {
+            $this->review($this->worker('electrician', 'Kaloum', [], "Filtered {$index}"), 5);
+        }
+
+        $this->get('/search?trade=electrician&city=Kaloum&min_rating=4')
+            ->assertOk()
+            ->assertSee('Page 1 sur 2')
+            ->assertSee('trade=electrician')
+            ->assertSee('city=Kaloum')
+            ->assertSee('min_rating=4');
+    }
+
+    private function worker(string $tradeSlug, string $city, array $profileOverrides = [], ?string $name = null): User
     {
         $trade = Trade::where('slug', $tradeSlug)->firstOrFail();
 
-        $worker = User::factory()->worker()->create(['city' => $city]);
+        $attributes = ['city' => $city];
+
+        if ($name !== null) {
+            $attributes['name'] = $name;
+        }
+
+        $worker = User::factory()->worker()->create($attributes);
 
         WorkerProfile::factory()->create(array_merge([
             'user_id' => $worker->id,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\ReviewStatus;
 use App\Enums\UserRole;
+use App\Models\Review;
 use App\Models\Trade;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -23,6 +24,14 @@ class SearchController extends Controller
         $city = $filters['city'] ?? null;
         $minRating = isset($filters['min_rating']) && $filters['min_rating'] !== '' ? (float) $filters['min_rating'] : null;
 
+        // Aggregate reviews once instead of running a correlated subquery for
+        // every worker. This keeps the filter and the pagination count working
+        // identically on SQLite and MySQL.
+        $ratingStats = Review::query()
+            ->selectRaw('worker_id, count(*) as published_reviews_count, avg(rating) as published_reviews_avg_rating')
+            ->where('status', ReviewStatus::Published)
+            ->groupBy('worker_id');
+
         $workers = User::query()
             ->where('role', UserRole::Worker)
             ->where('is_active', true)
@@ -40,24 +49,22 @@ class SearchController extends Controller
                     });
                 }
             })
-            ->with(['workerProfile.trade'])
-            ->withCount([
-                'reviewsAsWorker as published_reviews_count' => fn ($query) => $query->where('status', ReviewStatus::Published),
-            ])
-            ->withAvg([
-                'reviewsAsWorker as published_reviews_avg_rating' => fn ($query) => $query->where('status', ReviewStatus::Published),
-            ], 'rating')
+            ->leftJoinSub($ratingStats, 'rating_stats', fn ($join) => $join->on('rating_stats.worker_id', '=', 'users.id'))
             ->when($minRating !== null, function ($query) use ($minRating) {
-                // Cast to a numeric literal; PDO binds floats as text on SQLite,
-                // which breaks comparisons against the AVG() result.
+                // Embed the validated numeric literal: PDO binds floats as text
+                // on SQLite, which makes comparisons against AVG() fail.
                 $query->whereRaw(
-                    '(select avg(rating) from reviews where reviews.worker_id = users.id and reviews.status = ?) >= '.(float) $minRating,
-                    [ReviewStatus::Published->value]
+                    'rating_stats.published_reviews_avg_rating >= '.(float) $minRating
                 );
             })
-            ->orderByDesc('published_reviews_avg_rating')
-            ->orderBy('name')
-            ->get();
+            ->with(['workerProfile.trade'])
+            ->select('users.*')
+            ->selectRaw('coalesce(rating_stats.published_reviews_count, 0) as published_reviews_count')
+            ->selectRaw('rating_stats.published_reviews_avg_rating as published_reviews_avg_rating')
+            ->orderByDesc('rating_stats.published_reviews_avg_rating')
+            ->orderBy('users.name')
+            ->paginate(6)
+            ->withQueryString();
 
         return view('search', [
             'workers' => $workers,
