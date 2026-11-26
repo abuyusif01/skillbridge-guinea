@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Enums\BookingStatus;
 use App\Enums\UserRole;
+use App\Http\Requests\UpdateWorkerProfileRequest;
+use App\Models\Trade;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class WorkerProfileController extends Controller
@@ -45,5 +49,31 @@ class WorkerProfileController extends Controller
             'ratingCounts' => $ratingCounts,
             'completedJobs' => $completedJobs,
         ]);
+    }
+
+    public function edit(Request $request): View
+    {
+        $user = $request->user()->load('workerProfile.trade');
+
+        abort_unless($user->workerProfile !== null, 404);
+
+        return view('workers.edit', [
+            'user' => $user,
+            'profile' => $user->workerProfile,
+            'trades' => Trade::query()->active()->orderBy('name_fr')->get(),
+        ]);
+    }
+
+    public function update(UpdateWorkerProfileRequest $request): RedirectResponse
+    {
+        $profile = $request->user()->workerProfile;
+
+        abort_unless($profile !== null, 404);
+
+        $profile->update($request->validated());
+
+        return redirect()
+            ->route('worker.profile.edit')
+            ->with('status', 'Votre profil a été mis à jour.');
     }
 }

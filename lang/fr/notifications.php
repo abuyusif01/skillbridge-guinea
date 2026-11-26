@@ -43,6 +43,12 @@ return [
         'action' => 'Voir ma réservation',
     ],
 
+    'booking_cancelled' => [
+        'title' => 'Demande annulée par le client',
+        'message' => ':customer a annulé sa demande de :trade prévue le :date.',
+        'action' => 'Voir mon tableau de bord',
+    ],
+
     'review_received' => [
         'title' => 'Nouvel avis reçu',
         'message' => ':customer vous a attribué :rating/5. « :comment »',

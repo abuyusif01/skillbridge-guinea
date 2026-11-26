@@ -73,19 +73,24 @@ Demo users are skipped when `APP_ENV=production`.
 - Public landing page with DB-backed trades, stats and a featured professional
 - Search by trade, city and minimum rating, with paginated results that keep
   the active filters; public worker profiles with reviews
-- Customer booking form, confirmation and dashboard
-- Worker dashboard: accept, decline and complete requests
+- Customer booking form, confirmation and dashboard; cancel a pending or
+  accepted request
+- Worker dashboard: accept, decline and complete requests; edit profile,
+  service area, rate and availability
 - Customer review form, one review per completed booking
 - Admin dashboard: suspend/reactivate users, delete reviews, inspect bookings
 - Registration for customers and professionals; login by e-mail or phone
 - Password reset by e-mail link (written to the local log, see below)
 - In-app notification centre with unread badge: new booking requests, accept,
-  decline, completion and new reviews; mark one or all as read
+  decline, completion, customer cancellation and new reviews; mark one or all
+  as read
 - Suspended accounts blocked at login and on active sessions
-- Role middleware (`role:admin`) and policies for booking/review actions
+- Role middleware (`role:admin`) and policies for booking/review/cancel actions
 - FR/EN and light/dark controls on every Blade page
 
-Production deployment, SMS delivery and queued mail are next.
+The app is intended to run locally for the FYP demo. Admin worker verification,
+server-side locale switching, SMS delivery and queued mail remain; production
+deployment is out of scope.
 
 ### Notifications and password reset in local development
 

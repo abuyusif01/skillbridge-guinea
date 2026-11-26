@@ -7,6 +7,7 @@ use App\Enums\UserRole;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Booking;
 use App\Models\User;
+use App\Notifications\BookingCancelled;
 use App\Notifications\NewBookingRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -60,6 +61,21 @@ class BookingController extends Controller
         return view('bookings.success', [
             'booking' => $booking,
         ]);
+    }
+
+    public function cancel(Booking $booking): RedirectResponse
+    {
+        $this->authorize('cancel', $booking);
+
+        $booking->forceFill([
+            'status' => BookingStatus::Cancelled,
+        ])->save();
+
+        $booking->worker->notify(
+            (new BookingCancelled($booking))->locale($booking->worker->locale ?: 'fr')
+        );
+
+        return back()->with('status', 'Réservation annulée.');
     }
 
     private function ensureBookableWorker(User $worker): void

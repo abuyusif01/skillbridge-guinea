@@ -96,14 +96,19 @@ notifications power the in-app inbox; the same events send an e-mail.
 - Customers can book only workers with an active worker profile.
 - Workers accept or decline pending requests; only accepted bookings can be
   marked completed by the worker.
+- Customers can cancel pending or accepted bookings; completion, decline and
+  cancellation are final states.
+- Workers can edit their trade, biography, experience, service area, starting
+  rate and availability. Unavailable workers are hidden from search.
 - A review can be created only by the customer, only after completion, and only
   once per booking.
 - Ratings are aggregated on the worker profile (average + count).
 - Admin can suspend users, hide reported reviews, and view bookings.
 - No online payments. Payment happens directly between customer and worker.
 - Booking activity notifies the other party: a new request reaches the worker;
-  accept, decline and completion reach the customer; a new review reaches the
-  worker. Each notification is stored in the inbox and e-mailed.
+  accept, decline, completion and customer cancellation reach the relevant
+  party; a new review reaches the worker. Each notification is stored in the
+  inbox and e-mailed.
 - Password reset uses Laravel's broker with a signed, expiring token. The
   response never reveals whether an e-mail address belongs to an account.
 
@@ -138,9 +143,11 @@ notifications power the in-app inbox; the same events send an e-mail.
 8. **Recovery, notifications + pagination** — password reset, notification inbox
    and booking/review e-mails, paginated search with a portable rating filter,
    24 new feature tests. *(done)*
-9. **Tests + deploy** — 84 feature tests and CI green; server-side locale
-   switching, production deploy, SMS notifications, queued mail and R2 media
-   remain.
+9. **Profile + cancellation** — worker profile editing and availability,
+   customer cancellation with worker notification, 14 new feature tests. *(done)*
+10. **Tests + local delivery** — 98 feature tests and CI green; admin worker
+    verification, server-side locale switching, SMS notifications and queued
+    mail remain. Production deployment is out of scope for the local FYP demo.
 
 ## Open decisions
 

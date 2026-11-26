@@ -22,6 +22,7 @@
       <div class="dash-head-actions">
         @if ($user->workerProfile)
           <span class="badge badge-green">{{ $user->workerProfile->is_available ? 'Disponible' : 'Indisponible' }}</span>
+          <a class="btn btn-primary btn-sm" href="{{ route('worker.profile.edit') }}">Modifier mon profil</a>
           <a class="btn btn-outline btn-sm" href="{{ route('workers.show', $user) }}">Voir mon profil</a>
         @endif
       </div>

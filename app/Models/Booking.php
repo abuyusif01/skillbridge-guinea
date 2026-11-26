@@ -77,6 +77,11 @@ class Booking extends Model
         return $this->isCompleted() && ! $this->review()->exists();
     }
 
+    public function canBeCancelled(): bool
+    {
+        return in_array($this->status, [BookingStatus::Pending, BookingStatus::Accepted], true);
+    }
+
     public function scopePending(Builder $query): Builder
     {
         return $query->where('status', BookingStatus::Pending);

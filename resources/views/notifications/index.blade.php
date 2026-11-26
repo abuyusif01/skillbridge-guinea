@@ -45,6 +45,7 @@
               $type = $notification->data['type'] ?? '';
               $icon = match ($type) {
                   'booking_request' => '📩',
+                  'booking_cancelled' => '🚫',
                   'review_received' => '⭐',
                   'booking_status' => match ($notification->data['status'] ?? '') {
                       'accepted' => '✅',

@@ -77,6 +77,13 @@
                 @if ($booking->canBeReviewed())
                   <a class="btn btn-primary btn-sm" href="{{ route('reviews.create', $booking) }}">Laisser un avis</a>
                 @endif
+                @if ($booking->canBeCancelled())
+                  <form class="inline-form" method="POST" action="{{ route('bookings.cancel', $booking) }}" onsubmit="return confirm('Annuler cette réservation ?');">
+                    @csrf
+                    @method('PATCH')
+                    <button class="btn btn-danger btn-sm" type="submit">Annuler la réservation</button>
+                  </form>
+                @endif
               </div>
             </article>
           @endforeach
