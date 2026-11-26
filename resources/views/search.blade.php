@@ -3,6 +3,10 @@
 @section('title', 'Recherche — '.config('app.name'))
 @section('meta_description', 'Trouvez des professionnels vérifiés près de chez vous en Guinée.')
 
+@push('head')
+  <link rel="stylesheet" href="{{ asset('assets/css/pagination.css') }}">
+@endpush
+
 @section('content')
   <div class="wrap">
     <div class="page-head">
@@ -12,7 +16,7 @@
         <span>Recherche</span>
       </nav>
       <h1>Rechercher un professionnel</h1>
-      <p class="sub">{{ $workers->count() }} professionnels disponibles</p>
+      <p class="sub">{{ $workers->total() }} professionnels disponibles</p>
     </div>
 
     <form class="search-bar" method="GET" action="{{ route('search') }}">
@@ -74,7 +78,7 @@
           </div>
         @else
           <div class="results-head">
-            <h2>{{ $workers->count() }} professionnels</h2>
+            <h2>{{ $workers->total() }} professionnels</h2>
             <span class="sort">Triés par : meilleure note</span>
           </div>
 
@@ -124,6 +128,24 @@
               </article>
             @endforeach
           </div>
+
+          @if ($workers->hasPages())
+            <nav class="pagination" aria-label="Pagination des résultats">
+              @if ($workers->onFirstPage())
+                <span class="btn btn-outline btn-sm is-disabled" aria-disabled="true">Précédent</span>
+              @else
+                <a class="btn btn-outline btn-sm" href="{{ $workers->previousPageUrl() }}" rel="prev">Précédent</a>
+              @endif
+
+              <span class="pagination-status">Page {{ $workers->currentPage() }} sur {{ $workers->lastPage() }}</span>
+
+              @if ($workers->hasMorePages())
+                <a class="btn btn-outline btn-sm" href="{{ $workers->nextPageUrl() }}" rel="next">Suivant</a>
+              @else
+                <span class="btn btn-outline btn-sm is-disabled" aria-disabled="true">Suivant</span>
+              @endif
+            </nav>
+          @endif
         @endif
       </section>
     </div>

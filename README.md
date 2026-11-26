@@ -71,7 +71,8 @@ Demo users are skipped when `APP_ENV=production`.
 ## What works now
 
 - Public landing page with DB-backed trades, stats and a featured professional
-- Search by trade, city and minimum rating; public worker profiles with reviews
+- Search by trade, city and minimum rating, with paginated results that keep
+  the active filters; public worker profiles with reviews
 - Customer booking form, confirmation and dashboard
 - Worker dashboard: accept, decline and complete requests
 - Customer review form, one review per completed booking

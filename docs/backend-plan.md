@@ -135,10 +135,12 @@ notifications power the in-app inbox; the same events send an e-mail.
 5. **Customer flow** — search, filters, worker profile, booking request. *(done)*
 6. **Worker dashboard** — pending/accepted/completed, accept/decline/complete. *(done)*
 7. **Reviews + admin** — review submission, moderation, user management. *(done)*
-8. **Recovery + notifications** — password reset, notification inbox and
-   booking/review e-mails, 21 new feature tests. *(done)*
-9. **Tests + deploy** — 81 feature tests and CI green; production deploy, SMS
-   notifications, queued mail and R2 media remain.
+8. **Recovery, notifications + pagination** — password reset, notification inbox
+   and booking/review e-mails, paginated search with a portable rating filter,
+   24 new feature tests. *(done)*
+9. **Tests + deploy** — 84 feature tests and CI green; server-side locale
+   switching, production deploy, SMS notifications, queued mail and R2 media
+   remain.
 
 ## Open decisions
 
