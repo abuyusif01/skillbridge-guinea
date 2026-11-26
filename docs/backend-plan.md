@@ -85,6 +85,12 @@
 | status | `published`, `reported`, `hidden` |
 | timestamps | |
 
+### notifications
+
+Laravel's standard polymorphic notifications table (`uuid` id, `type`,
+`notifiable_type`, `notifiable_id`, `data` JSON, `read_at`). Database
+notifications power the in-app inbox; the same events send an e-mail.
+
 ## Business rules
 
 - Customers can book only workers with an active worker profile.
@@ -95,6 +101,11 @@
 - Ratings are aggregated on the worker profile (average + count).
 - Admin can suspend users, hide reported reviews, and view bookings.
 - No online payments. Payment happens directly between customer and worker.
+- Booking activity notifies the other party: a new request reaches the worker;
+  accept, decline and completion reach the customer; a new review reaches the
+  worker. Each notification is stored in the inbox and e-mailed.
+- Password reset uses Laravel's broker with a signed, expiring token. The
+  response never reveals whether an e-mail address belongs to an account.
 
 ## Security baseline
 
@@ -103,6 +114,8 @@
   actions.
 - Authorisation checks on every booking/review state transition.
 - Rate-limit login and review submission.
+- Rate-limit password-reset requests; always return the same response for known
+  and unknown e-mail addresses.
 - Validate and store uploads on non-public disk; serve through controllers if
   avatars are added.
 - Admin routes under `auth` + `role:admin` middleware.
@@ -122,8 +135,10 @@
 5. **Customer flow** — search, filters, worker profile, booking request. *(done)*
 6. **Worker dashboard** — pending/accepted/completed, accept/decline/complete. *(done)*
 7. **Reviews + admin** — review submission, moderation, user management. *(done)*
-8. **Tests + deploy** — 60 feature tests and CI green; production deploy, password
-   reset, notifications and R2 media remain.
+8. **Recovery + notifications** — password reset, notification inbox and
+   booking/review e-mails, 21 new feature tests. *(done)*
+9. **Tests + deploy** — 81 feature tests and CI green; production deploy, SMS
+   notifications, queued mail and R2 media remain.
 
 ## Open decisions
 
@@ -131,5 +146,6 @@
 - Phone-only registration / login by phone or email.
 - Exact booking time-slot representation.
 - Deployment platform: Fly.io, Railway, Forge or VPS.
-- Email/SMS notifications provider for booking status changes.
+- Email/SMS notifications provider for booking status changes. E-mail is wired
+  to Laravel's mailer; an SMS channel is still open.
 - Avatar storage: local disk first, Cloudflare R2 with S3 driver in production.

@@ -78,3 +78,9 @@
     display: none;
   }
 }
+
+.auth-alert--success {
+  border-color: var(--green-bg);
+  background: var(--green-bg);
+  color: var(--green);
+}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\BookingStatus;
 use App\Models\Booking;
+use App\Notifications\BookingStatusChanged;
 use Illuminate\Http\RedirectResponse;
 
 class WorkerBookingController extends Controller
@@ -17,6 +18,8 @@ class WorkerBookingController extends Controller
             'responded_at' => now(),
         ])->save();
 
+        $this->notifyCustomer($booking);
+
         return back()->with('status', 'Demande acceptée.');
     }
 
@@ -28,6 +31,8 @@ class WorkerBookingController extends Controller
             'status' => BookingStatus::Declined,
             'responded_at' => now(),
         ])->save();
+
+        $this->notifyCustomer($booking);
 
         return back()->with('status', 'Demande déclinée.');
     }
@@ -41,6 +46,17 @@ class WorkerBookingController extends Controller
             'completed_at' => now(),
         ])->save();
 
+        $this->notifyCustomer($booking);
+
         return back()->with('status', 'Travail marqué comme terminé.');
+    }
+
+    private function notifyCustomer(Booking $booking): void
+    {
+        $customer = $booking->customer;
+
+        $customer->notify(
+            (new BookingStatusChanged($booking))->locale($customer->locale ?: 'fr')
+        );
     }
 }

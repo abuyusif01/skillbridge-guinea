@@ -10,6 +10,7 @@
   <script src="{{ asset('assets/js/theme.js') }}"></script>
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/auth.css') }}">
+  <link rel="stylesheet" href="{{ asset('assets/css/notifications.css') }}">
   @stack('head')
 </head>
 <body class="@yield('body_class', 'no-bottom-nav')">
@@ -44,6 +45,16 @@
       </nav>
 
       <div class="header-actions">
+        @auth
+          @php($unreadNotifications = auth()->user()->unreadNotifications()->count())
+          <a class="notification-bell" href="{{ route('notifications.index') }}" aria-label="Notifications{{ $unreadNotifications > 0 ? ' ('.$unreadNotifications.' non lues)' : '' }}" title="Notifications">
+            <svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+            @if ($unreadNotifications > 0)
+              <span class="notification-count" aria-hidden="true">{{ $unreadNotifications > 9 ? '9+' : $unreadNotifications }}</span>
+            @endif
+          </a>
+        @endauth
+
         <div class="lang-switch" role="group" aria-label="Language / Langue">
           <button type="button" data-lang="fr" class="active" aria-pressed="true">FR</button>
           <button type="button" data-lang="en" aria-pressed="false">EN</button>

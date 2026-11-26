@@ -6,6 +6,7 @@ use App\Enums\ReviewStatus;
 use App\Http\Requests\StoreReviewRequest;
 use App\Models\Booking;
 use App\Models\Review;
+use App\Notifications\ReviewReceived;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -28,7 +29,7 @@ class ReviewController extends Controller
 
         $data = $request->validated();
 
-        Review::create([
+        $review = Review::create([
             'booking_id' => $booking->id,
             'customer_id' => $request->user()->id,
             'worker_id' => $booking->worker_id,
@@ -36,6 +37,10 @@ class ReviewController extends Controller
             'comment' => $data['comment'] ?? null,
             'status' => ReviewStatus::Published,
         ]);
+
+        $booking->worker->notify(
+            (new ReviewReceived($review))->locale($booking->worker->locale ?: 'fr')
+        );
 
         return redirect()
             ->route('workers.show', $booking->worker)

@@ -7,6 +7,7 @@ use App\Enums\UserRole;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Booking;
 use App\Models\User;
+use App\Notifications\NewBookingRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -42,6 +43,10 @@ class BookingController extends Controller
             'contact_phone' => $data['contact_phone'],
             'status' => BookingStatus::Pending,
         ]);
+
+        $worker->notify(
+            (new NewBookingRequest($booking))->locale($worker->locale ?: 'fr')
+        );
 
         return redirect()->route('bookings.success', $booking);
     }
