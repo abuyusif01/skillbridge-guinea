@@ -104,7 +104,7 @@
                     @if ($count > 0)
                       <span class="rating-line">
                         <x-star-rating :rating="(int) round((float) $rating)" />
-                        <strong>{{ number_format((float) $rating, 1, ',', ' ') }}</strong> ({{ $count }} avis)
+                        <strong>{{ number_format((float) $rating, 1, ',', ' ') }}</strong> ({{ $count }} {{ trans_choice('ui.review', $count) }})
                       </span>
                     @else
                       <span class="badge">Nouveau</span>

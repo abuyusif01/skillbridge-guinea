@@ -54,7 +54,7 @@
                     @if ($featuredRating !== null)
                       <strong>{{ $featuredRating }}</strong>
                     @endif
-                    <span>{{ $featuredReviewsCount }} avis</span>
+                    <span>{{ $featuredReviewsCount }} {{ trans_choice('ui.review', $featuredReviewsCount) }}</span>
                   @else
                     <span class="badge">Nouveau</span>
                   @endif

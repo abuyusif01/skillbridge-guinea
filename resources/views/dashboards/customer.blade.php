@@ -6,10 +6,10 @@
 @section('content')
   @php
     $slots = [
-      'morning' => 'Matin',
-      'afternoon' => 'Après-midi',
-      'evening' => 'Soir',
-      'any' => 'Peu importe',
+      'morning' => __('ui.slots.morning'),
+      'afternoon' => __('ui.slots.afternoon'),
+      'evening' => __('ui.slots.evening'),
+      'any' => __('ui.slots.any'),
     ];
   @endphp
 

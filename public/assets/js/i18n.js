@@ -33,6 +33,7 @@
     [/^(\d+)\s+professionnels? disponibles?$/, "$1 professionals available"],
     [/^(\d+)\s+professionnels?$/, "$1 professionals"],
     [/^Page\s+(\d+)\s+sur\s+(\d+)$/, "Page $1 of $2"],
+    [/^(\d+)\s+au total$/, "$1 total"],
     [/^(\d+)\s+avis$/, "$1 reviews"],
     [/^(\d+)\s+utilisateurs? récents?$/, "$1 recent users"],
     [/^(\d+)\s+réservations? en attente$/, "$1 pending bookings"],

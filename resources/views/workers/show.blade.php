@@ -26,7 +26,7 @@
               <div class="rating-line">
                 @if ($reviewCount > 0)
                   <span class="stars" aria-hidden="true">★★★★★</span>
-                  <strong>{{ number_format((float) $averageRating, 1, ',', ' ') }}</strong> ({{ $reviewCount }} avis)
+                  <strong>{{ number_format((float) $averageRating, 1, ',', ' ') }}</strong> ({{ $reviewCount }} {{ trans_choice('ui.review', $reviewCount) }})
                 @else
                   <span class="badge">Nouveau</span>
                 @endif
@@ -75,7 +75,7 @@
             <div class="big-rating">
               <div class="value">{{ $reviewCount > 0 ? number_format((float) $averageRating, 1, ',', ' ') : '—' }}</div>
               <x-star-rating :rating="(int) round((float) $averageRating)" />
-              <div class="count">{{ $reviewCount }} avis</div>
+              <div class="count">{{ $reviewCount }} {{ trans_choice('ui.review', $reviewCount) }}</div>
             </div>
             <div class="rating-bars">
               @for ($star = 5; $star >= 1; $star--)
@@ -96,7 +96,7 @@
         <section aria-label="Commentaires">
           <div class="reviews-head">
             <h2>Derniers commentaires</h2>
-            <span class="muted" style="font-size: 0.8rem">{{ $reviewCount }} avis vérifiés</span>
+            <span class="muted" style="font-size: 0.8rem">{{ $reviewCount }} {{ trans_choice('ui.verified_review', $reviewCount) }}</span>
           </div>
 
           @if ($reviews->isEmpty())

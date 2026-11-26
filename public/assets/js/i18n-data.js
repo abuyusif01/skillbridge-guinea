@@ -12,6 +12,7 @@ window.SB_EN = {
   "Bonjour,": "Hello,",
   "Compte actif": "Active account",
   "Administrateur": "Administrator",
+  "Client": "Customer",
   "Nouveau": "New",
   "Avis donnés": "Reviews given",
   "Avis reçus": "Reviews received",
