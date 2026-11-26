@@ -28,4 +28,9 @@ class BookingPolicy
     {
         return $user->id === $booking->customer_id && $booking->canBeReviewed();
     }
+
+    public function cancel(User $user, Booking $booking): bool
+    {
+        return $user->id === $booking->customer_id && $booking->canBeCancelled();
+    }
 }

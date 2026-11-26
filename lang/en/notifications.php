@@ -43,6 +43,12 @@ return [
         'action' => 'View my booking',
     ],
 
+    'booking_cancelled' => [
+        'title' => 'Request cancelled by the customer',
+        'message' => ':customer cancelled their :trade request for :date.',
+        'action' => 'View my dashboard',
+    ],
+
     'review_received' => [
         'title' => 'New review received',
         'message' => ':customer rated you :rating/5. “:comment”',

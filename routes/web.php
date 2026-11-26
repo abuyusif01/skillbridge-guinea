@@ -57,12 +57,16 @@ Route::middleware(['auth', 'active', 'role:customer'])->group(function () {
     Route::get('/workers/{worker}/book', [BookingController::class, 'create'])->name('bookings.create');
     Route::post('/workers/{worker}/bookings', [BookingController::class, 'store'])->name('bookings.store');
     Route::get('/bookings/{booking}/sent', [BookingController::class, 'success'])->name('bookings.success');
+    Route::patch('/bookings/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
 
     Route::get('/bookings/{booking}/review', [ReviewController::class, 'create'])->name('reviews.create');
     Route::post('/bookings/{booking}/review', [ReviewController::class, 'store'])->name('reviews.store');
 });
 
 Route::middleware(['auth', 'active', 'role:worker'])->prefix('worker')->name('worker.')->group(function () {
+    Route::get('/profile/edit', [WorkerProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [WorkerProfileController::class, 'update'])->name('profile.update');
+
     Route::patch('/bookings/{booking}/accept', [WorkerBookingController::class, 'accept'])->name('bookings.accept');
     Route::patch('/bookings/{booking}/decline', [WorkerBookingController::class, 'decline'])->name('bookings.decline');
     Route::patch('/bookings/{booking}/complete', [WorkerBookingController::class, 'complete'])->name('bookings.complete');
